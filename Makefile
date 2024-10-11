@@ -1,12 +1,14 @@
-.PHONY: build view
+.PHONY: build
 
 build: notebook.pdf
 
-view: notebook.pdf
-	mupdf notebook.pdf
+notebook.pdf: media/titlepage.pdf content.pdf
+	pdfunite media/titlepage.pdf content.pdf notebook.pdf
 
-notebook.pdf: titlepage.pdf content.pdf
-	pdfunite titlepage.pdf content.pdf notebook.pdf
-
-content.pdf: notebook.md
-	pandoc -t pdf notebook.md --template eisvogel -o content.pdf --number-sections --table-of-contents
+content.pdf: notebook.md media/*
+	pandoc -t pdf notebook.md -o content.pdf \
+	--template eisvogel \
+	--number-sections \
+	--resource-path=./media \
+	--eol=native \
+	--strip-comments

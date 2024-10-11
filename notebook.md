@@ -5,12 +5,14 @@ date: "2024-10-10"
 subject: "Robotics"
 keywords: [Robotics, VRC]
 lang: "en"
+toc: true
+toc-own-page: true
+page-background: "media/background.pdf"
+page-background-opacity: 0.1
 ...
 
-<!--Create space for the table of contents-->
-\newpage
-
 # About us
+![This is a test image](logo.png){width=100}
 
 # Allen
 
