@@ -5,10 +5,10 @@ date: "2017-02-20"
 subject: "Markdown"
 keywords: [Markdown, Example]
 lang: "en"
-titlepage: true
-titlepage-color: "cc0000"
-titlepage-text-color: "ffffff"
 ...
+
+<!--Create space for the table of contents-->
+\newpage
 
 # Vinaque sanguine metuenti cuiquam Alcyone fixus
 

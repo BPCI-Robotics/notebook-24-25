@@ -9,4 +9,4 @@ notebook.pdf: titlepage.pdf content.pdf
 	pdfunite titlepage.pdf content.pdf notebook.pdf
 
 content.pdf: notebook.md
-	pandoc -t pdf notebook.md --template eisvogel -o content.pdf
+	pandoc -t pdf notebook.md --template eisvogel -o content.pdf --number-sections --table-of-contents
