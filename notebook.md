@@ -1,60 +1,67 @@
 ---
-title: "Example PDF"
-author: [Author]
-date: "2017-02-20"
-subject: "Markdown"
-keywords: [Markdown, Example]
+title: "Birchmount Robotics - Engineering Notebook - High Stakes 24-25"
+author: [Aseer Tayeem]
+date: "2024-10-10"
+subject: "Robotics"
+keywords: [Robotics, VRC]
 lang: "en"
 ...
 
 <!--Create space for the table of contents-->
 \newpage
 
-# Vinaque sanguine metuenti cuiquam Alcyone fixus
+# About us
 
-## Aesculeae domus vincemur et Veneris adsuetus lapsum
+# Allen
 
-Lorem markdownum Letoia, et alios: figurae flectentem annis aliquid Peneosque ab
-esse, obstat gravitate. Obscura atque coniuge, per de coniunx, sibi **medias
-commentaque virgine** anima tamen comitemque petis, sed. In Amphion vestros
-hamos ire arceor mandere spicula, in licet aliquando.
+## Design
 
-```java
-public class Example implements LoremIpsum {
-	public static void main(String[] args) {
-		if(args.length < 2) {
-			System.out.println("Lorem ipsum dolor sit amet");
-		}
-	} // Obscura atque coniuge, per de coniunx
-}
-```
+### Drivetrain
 
-Porrigitur et Pallas nuper longusque cratere habuisse sepulcro pectore fertur.
-Laudat ille auditi; vertitur iura tum nepotis causa; motus. Diva virtus! Acrota
-destruitis vos iubet quo et classis excessere Scyrumve spiro subitusque mente
-Pirithoi abstulit, lapides.
+### Intake mechanism
 
-## Lydia caelo recenti haerebat lacerum ratae at
+### Launcher mechanism
 
-Te concepit pollice fugit vias alumno **oras** quam potest
-[rursus](http://example.com#rursus) optat. Non evadere orbem equorum, spatiis,
-vel pede inter si.
+## Programming
 
-1. De neque iura aquis
-2. Frangitur gaudia mihi eo umor terrae quos
-3. Recens diffudit ille tantum
+### Controller bindings
 
-\begin{equation}\label{eq:neighbor-propability}
-    p_{ij}(t) = \frac{\ell_j(t) - \ell_i(t)}{\sum_{k \in N_i(t)}^{} \ell_k(t) - \ell_i(t)}
-\end{equation}
+### `JiggleIt` incident
 
-Tamen condeturque saxa Pallorque num et ferarum promittis inveni lilia iuvencae
-adessent arbor. Florente perque at condeturque saxa et ferarum promittis tendebat. Armos nisi obortas refugit me.
+### PROS
 
-> Et nepotes poterat, se qui. Euntem ego pater desuetaque aethera Maeandri, et
-[Dardanio geminaque](http://example.com#Dardanio_geminaque) cernit. Lassaque poenas
-nec, manifesta $\pi r^2$ mirantia captivarum prohibebant scelerato gradus unusque
-dura.
+# Allen 2.0
 
-- Permulcens flebile simul
-- Iura tum nepotis causa motus diva virtus Acrota. Tamen condeturque saxa Pallorque num et ferarum promittis inveni lilia iuvencae adessent arbor. Florente perque at ire arcum.
+## Design
+
+### Offensive playstyle
+
+## Programming
+
+# Allen 2.1
+
+## Design
+
+### Switch from iron to aluminium
+
+### Pneumatic stake grabber
+
+### Intake mechanism
+
+## Programming
+
+### Version control
+
+### Switch to Python
+
+### Control curve
+
+### Functional programming style
+
+# Allen 2.2
+
+## Design
+
+## Programming
+
+# Mathematical techniques
