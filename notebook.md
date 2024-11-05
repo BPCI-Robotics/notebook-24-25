@@ -12,7 +12,7 @@ page-background-opacity: 0.1
 ...
 
 # About us
-![This is a test image](logo.png){width=100}
+
 
 # Allen
 

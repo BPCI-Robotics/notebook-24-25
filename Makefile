@@ -1,12 +1,15 @@
 .PHONY: build
 
-build: notebook.pdf
+build: build/notebook.pdf
 
-notebook.pdf: media/titlepage.pdf media/content.pdf
-	pdfunite media/titlepage.pdf media/content.pdf notebook.pdf
+clean:
+	rm build/*.pdf
 
-media/content.pdf: notebook.md media/*
-	pandoc -t pdf notebook.md -o media/content.pdf \
+build/notebook.pdf: media/titlepage.pdf build/content.pdf
+	pdfunite $^ $@
+
+build/content.pdf: notebook.md media/*
+	pandoc -t pdf $< -o $@ \
 	--template eisvogel \
 	--number-sections \
 	--resource-path=./media \
