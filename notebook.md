@@ -9,15 +9,33 @@ toc: true
 toc-own-page: true
 page-background: "media/background.pdf"
 page-background-opacity: 0.15
+table-use-row-colors: false
 ...
 
 # About us
+Hello! We are the VEX robotics team at Birchmount Park Collegiate Institute in Scarborough, ON.
 
+
+## Our members
+<!--+--------------------------------+----------------------------------+
+| Aseer ![](logo.png){width=50,height=50} | Tyler ![](logo.png){width=50,height=50}   |
+| Colin ![](logo.png){width=50,height=50} | Wesley ![](logo.png){width=50,height=50}  |
+| Rohan ![](logo.png){width=50,height=50} | Turhan ![](logo.png){width=50,height=50}  |
+| Wadid ![](logo.png){width=50,height=50} | Parthib ![](logo.png){width=50,height=50} |
++--------- -----------------------+----------------------------------+-->
+
+<table>
+    <tr>
+        <td>Aseer</td>
+        <td>![](logo.png){width=50px,height=50px}</td>
+    </tr>
+</table>
 
 # Allen
-Allen was the first robot we ever brought to a competition, and he served us well. He is named for our mascot Allen, who is the monkey responsible for bringing Allen wrenches to the team members. It was a very simple robot which had gone through many designs.
+Allen was the first robot we ever brought to a competition, and he served us well. He is named for our mascot Allen, who is the monkey responsible for bringing Allen wrenches to the team members. It was a very simple robot which had gone through many designs, as we were learning a lot about how to design robots.
 
 ## Design
+Allen was built on an all-iron drivetrain, based on the clawbot. 
 
 ### Drivetrain
 
@@ -28,15 +46,22 @@ Allen was the first robot we ever brought to a competition, and he served us wel
 ## Problems encountered
 
 ### Pneumatics failure
+During building and the competition, we had a habit of inflating the pneumatics tank to above its maximum rated pressure to try and fit more air in it. We did not realize that this would lead to a failure of the bike pump valve, such that it would not hold air anymore. So any mechanism involving pneumatics was off the table, such as our triball launcher. We had to change our strategy at this point. 
 
+Later we had solved this problem by sealing the end of the tank with the bike pump valve, and instead using the tubes themselves to connect to the small end of the bike pump.
 ### `JiggleIt` function
 
 ### Stuck on a triball
 
 ### PROS
-At this time, we were learning a lot, trying to understand what was going on. 
+> Written by Aseer
+
+At this time, we were exploring new technologies. I was more experienced in C than Python, so I decided to explore different ways to write robot code. VEX offers native C++ support, but not C support, and there is a lack of documentation about the different methods, instead relying on Intellisense for showing the right methods. PROS offers C support in a simple package. OkapiLib makes writing autonomous code easy, but we never used it.
+
+As I was reading the tutorial, I realized that the C code was wrong, as it was using C++ syntax, so I submitted a pull request to fix it which was accepted.
 
 # Allen 2.0
+
 
 ## Design
 

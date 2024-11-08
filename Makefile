@@ -14,4 +14,5 @@ build/content.pdf: notebook.md media/*
 	--number-sections \
 	--resource-path=./media \
 	--eol=native \
-	--strip-comments
+	--strip-comments \
+	--embed-resources
