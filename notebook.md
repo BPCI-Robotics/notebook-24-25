@@ -258,7 +258,7 @@ class RoboData:
 
 This uses functions from both the `threading` and `time` modules to ensure that the code runs at a specific frequency. It is evident what it does, but you might be wondering about the part `time.sleep(max(0, 1/FREQUENCY - time_spent))`. In the case that the time to sleep is negative, that means that the code is running too slow due to external factors. This is not a problem, it just means that we shouldn't wait to execute the next cycle.
 
-The reason to limit the rate at all, rather than using `while True:` is because otherwise a bunch of processing power would be used on pointlessly calculating something that isn't even that accurate. We're not writing spinlocks here.
+The reason to limit the rate at all, rather than using `while True` is because otherwise a bunch of processing power would be used on pointlessly calculating something that isn't even that accurate. We're not writing spinlocks here.
 
 # Barron
 While the team was iterating over the design of Allen 2.1, we wanted to explore a different design for the robot, and we also wanted to test software while the others were busy with the subsystems on the other robot. Barron was designed to cover a large footprint, with an aluminium-only chasis. It was impractically fast at full speed, so the speed and turning was limited in software.
@@ -290,6 +290,29 @@ This way, anything that is different about the robots is stored in the configura
 
 ## Drivetrain calculator spreadsheet
 `Written by Aseer`
-This was a side project which turned out to be pretty useful for deciding on drivetrains. There is a lot you can calculate about a drivetrain just based on its gear and motor configuration.
+This was a side project which turned out to be pretty useful for deciding on drivetrains. There is a lot you can calculate about a drivetrain just based on its gear and motor configuration. However, doing all the calculations by hand is pretty tedious and time consuming. What tool is good for doing a series of calculations and presenting it in a nice graphical format? A spreadsheet.
+
 
 ## Elevation calculations
+It turns out that it's not that complicated to calculate how much power you need for elevation. You can use normal kinematics, or you could just reframe the problem as "how much energy do I need?" Since we are lifting the robot off the ground, we can use the formula for gravitational potential energy:
+
+$E_p = mgh$
+
+Where $m$ is the mass of the robot, $g$ is gravity ($9.8 \frac{m}{s^2}$), and $h$ is how high the elevation is. We can also use the formula:
+
+$\Delta t = \frac{E}{P}$
+
+Given the gravitational potential energy and the power of the motors, we can calculate how much time it will take to elevate.
+
+We can also calculate how many rotations the robot has to make using these formulas:
+
+$$
+C = \pi d"total rotations" \newline
+\text{Total rotations} = \frac{h}{C} \
+\text{Revolutions per minute} = \frac{\text{Rotations}}{\Delta t} * 60 \frac {s}{m}
+$$
+
+Now we have everything we need, let's substitute in each of the formulas.
+$$
+\omega = \frac{60 \text{Revolutions}}{C} \text{Substitute Revolutions } = \frac{h}{C} \
+$$

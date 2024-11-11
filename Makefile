@@ -10,7 +10,6 @@ f:
 clean:
 	rm build/*.pdf
 
-# pdfunite usually comes with ubuntu and ubuntu-based distros. Otherwise install it.
 build/notebook.pdf: media/titlepage.pdf build/content.pdf
 	pdfunite $^ $@
 

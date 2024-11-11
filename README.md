@@ -5,7 +5,8 @@ To build this, you need `pandoc`, `texlive-full` and [this template](https://git
 
 Run these commands to install what you need.
 ```sh
-sudo apt install make texlive-full pandoc
+# WARNING: texlive-full is 5 GB!!
+sudo apt install make texlive-full pandoc poppler-utils
 
 templates_dir="$(pandoc --version | grep "User data" | sed "s/User data directory: //")/templates"
 mkdir --parents ${templates_dir}
