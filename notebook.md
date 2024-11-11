@@ -9,7 +9,6 @@ toc: true
 toc-own-page: true
 page-background: "media/background.pdf"
 page-background-opacity: 0.15
-table-use-row-colors: false
 ...
 
 # About us
@@ -79,12 +78,28 @@ Ultimately this design was never used for anything. But we took away these point
 
 ### Switch from iron to aluminium
 The reason that we used iron in the past is because we were concerned that aluminium, though light, would not provide sufficient strength. However, we realized that,
-  * Strength is more determined by geometry.
+
+* **Strength is more determined by geometry.**
     
-    \includegraphics[width=0.8\textwidth]{media/.png}
+  \includegraphics[width=1.0\textwidth]{media/metal_cross_sections.png}
 
-    As you can see in this graphic,
+  As you can see in this graphic, the shape of the metal beam (whether C, U, L, or straight) is the main factor which determines how strong the metal is. This is intuitively true, and these are sorted by which ones feel like they would be stronger. 
 
+  The reason for this can be seen on the bottom. When you push on a thin sheet of metal, the metal does not need to stretch much to bend. However, when you push a sheet of metal perpendicular to the direction you're pushing it, the end of it has to bend a whole lot more. If you managed to push it, the end would rip and the side you're pushing would buckle. This is much harder than, for example, bending a metal wire. 
+
+  For this reason, you can easily bend fiber optic cable, but it is very hard to bend a glass pane. Both are made of glass, one is thicker.
+
+* **The weak points are the fasteners, not the metal.**
+
+  This one means that if such a force is exerted on the robot that it would fail, the screws would fail before the metal. This protects the metal, and means that you do not need strong metal. However, a force that's more likely is one that will bend the metal but not break the screws. Metal is unlikely to bend when the correct geometry is used, though.
+
+* **Pushing around is not a good strategy.**
+  
+  Having a heavy drivetrain is an overall downside for the robot. The only benefit is the ability to grip the mats better, and to push around other robots. The other team has two robots, though, and in VEX Robotics the best strategy is usually to score as many points as possible. That's why in the meta, descoring is not a common strategy, though it works.
+
+* **Damaging parts is not important.**
+
+  The metal parts may be bent, but they still work, don't they? You can simply bend it back into position so that it can connect to other hardware.
 
 ### Pneumatic stake grabber
 
@@ -92,9 +107,17 @@ The reason that we used iron in the past is because we were concerned that alumi
 
 ### Intake mechanism
 
-### Removing the intake mechanism
+#### Removing the intake mechanism
 
 ### Elevation system
+
+\includegraphics[width=0.8\textwidth]{media/elevation_design_side_view.jpg}
+
+This is the first design we used for the elevation system, not including using the clawbot claw for this.
+
+\includegraphics[width=1.0\textwidth]{media/elevation_mechanism_close_up.png}
+
+This design uses a metal beam on a rail. It is tensioned into the open position by a rubber band which is pulling the head of one part to the tail of another part. The winch system pulls the ends together against the rubber band. To use it, the tension on the mechanism is released by the motor, allowing it to extend and reach the second rung of the ladder. The motor is turned around, pulling the parts together and pulling the robot up. The motor itself is geared for torque, but
 
 ## Programming
 
@@ -121,6 +144,7 @@ Given the values $M = 100$, $k = 0.15$, and $a = 50$, we get this graph:
 \includegraphics[width=0.8\textwidth]{media/logistic_curve_usual.png}
 
 There are a few modifications to make. For one, this only works for positive controller values. When moving the joystick backwards, the expected behavior is for the robot to go backwards. So, we can mirror the curve for negative values to replicate this behavior with negative numbers. Also, there is a certain range where the motor produces the most power, around 63%. This is the fastest speed it can go while still using full torque. See the [Motor curve section](#motor-curve).
+
 ```python
 def get_velocity(val: float, current_speed=100.0) -> float:
 
@@ -172,11 +196,69 @@ Here's what the controller curve looks like:
 ### Drivetrain from scratch implementation
 `Aseer`
 
-I felt that I wasn't learning that much about robotics programming just making the drivetrain using simple VEX drivetrain commands. That's why I decided to program the drivetrain by hand. There are a few problems that must be considered:
+I felt that I wasn't learning that much about robotics programming just controlling the drivetrain using simple VEX drivetrain commands. That's why I decided to program the drivetrain by hand. There are a few problems that must be considered:
 
   * Given the rotation position of the axles over time, where is the robot?
-  * How can the robot's velocity be calculated consistency, accounting for the kernel scheduler's inconsistency?
-  * 
+  * How can the robot's velocity be calculated consistently, accounting for the variance in the Python runtime?
+  * How can the robot correct error in its calculations?
+
+The specific implementation can be seen here:
+```python
+# 1. Get the new positions of the motors (say, 400 degrees)
+left_position_new = self.left_group.position(DEGREES)
+right_position_new = self.right_group.position(DEGREES)
+
+# 2. Get the change in motor position (say it went from 380 to 400 degrees, so 20 degrees)
+delta_left_position = left_position_new - self.left_position
+delta_right_position = right_position_new - self.right_position
+
+# 3. Get the change in distance for each side of the robot (for 20 degrees on 4" that is 1.77 cm)
+delta_left_distance = convert(delta_left_position, "deg", "rad") * WHEEL_RADIUS
+delta_right_distance = convert(delta_right_position, "deg", "rad") * WHEEL_RADIUS
+
+# 4. The average of the two is how far it went forward in total (as a vector)
+delta_forward_distance = (delta_left_distance + delta_right_distance) / 2
+
+# 5. The difference between the two over the width of the wheelbase is how much it turned.
+delta_angle = (delta_right_distance - delta_left_distance) / self.wheelbase
+
+# 6. Update data
+self.angle += delta_angle
+self.x += delta_forward_distance * math.cos(self.angle)
+self.y += delta_forward_distance * math.sin(self.angle)
+```
+
+1. Retrieve the position of the encoders inside the motors according to the motor group objects.
+2. Find out how much the position has changed since the last query.
+3. Find out how much each side of the robot has moved based on how much the motor turned. The `convert` table is defined in another function.
+4. The forward distance of the robot is the average of the left and right distance.
+  * Ex: 2 and -2 make 0, since this corresponds to turning on the spot
+  * Ex: 2 and 2 make 2, since this corresponds to moving forward
+5. The change in angle is the difference between the right and left distances travelled, divided by the width of the robot.
+6. Finally, put the calculated values back in the function.
+
+Because of the way this algorithm is implemented, it doesn't actually matter how much time has passed. Despite that, we still want to run this algorithm at a reasonable rate, and not bog down the rest of the system with pointless calculations. We also want to run it in parallel with the rest of the code. How can we solve both of these problems?
+
+```python
+class RoboData:
+    def __init__():
+        # ...
+
+        threading.Thread(target=self.loop).start()
+
+    def loop():
+        start_time = time.perf_counter()
+        end_time = time.perf_counter()
+        time_spent = end_time - start_time
+
+        # The code goes here.
+
+        time.sleep(max(0, 1/FREQUENCY - time_spent))
+```
+
+This uses functions from both the `threading` and `time` modules to ensure that the code runs at a specific frequency. It is evident what it does, but you might be wondering about the part `time.sleep(max(0, 1/FREQUENCY - time_spent))`. In the case that the time to sleep is negative, that means that the code is running too slow due to external factors. This is not a problem, it just means that we shouldn't wait to execute the next cycle.
+
+The reason to limit the rate at all, rather than using `while True:` is because otherwise a bunch of processing power would be used on pointlessly calculating something that isn't even that accurate. We're not writing spinlocks here.
 
 # Barron
 While the team was iterating over the design of Allen 2.1, we wanted to explore a different design for the robot, and we also wanted to test software while the others were busy with the subsystems on the other robot. Barron was designed to cover a large footprint, with an aluminium-only chasis. It was impractically fast at full speed, so the speed and turning was limited in software.
@@ -209,3 +291,5 @@ This way, anything that is different about the robots is stored in the configura
 ## Drivetrain calculator spreadsheet
 `Written by Aseer`
 This was a side project which turned out to be pretty useful for deciding on drivetrains. There is a lot you can calculate about a drivetrain just based on its gear and motor configuration.
+
+## Elevation calculations
