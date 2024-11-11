@@ -17,32 +17,41 @@ header-includes:
 Hello! We are the VEX robotics team at Birchmount Park Collegiate Institute in Scarborough, ON.
 
 ## Our members
-  * **Tyler**: Tyler is very good at coming up with designs for anything from little contraptions to whole subsystems.
-  * **Colin**: Colin is a good builder and designer, able to quickly construct new designs.
 
-  * **Wesley**: Wesley has a firm grasp on programming principles, and can solve problems quickly.
-  * **Aseer** Aseer is a good programmer who has a wide range of experience in different technologies.
+* **Tyler**: Tyler is very good at coming up with designs for anything from little contraptions to whole subsystems.
+* **Colin**: Colin is a good builder and designer, able to quickly construct new designs.
+
+* **Wesley**: Wesley has a firm grasp on programming principles, and can solve problems quickly.
+* **Aseer** Aseer is a good programmer who has a wide range of experience in different technologies.
 
 # Allen
 Allen was the first robot we ever brought to a competition, and he served us well. He is named for our mascot Allen, who is the monkey responsible for bringing Allen wrenches to the team members. It was a very simple robot which had gone through many designs, as we were learning a lot about how to design robots.
 
 ## Design
-Allen was built on an all-iron drivetrain, based on the clawbot. 
 
 ### Drivetrain
+
+Allen was built on an all-iron drivetrain, based on the clawbot. It employed two motors to power the basic drive (motors directly to wheels, no gears). Later we had done some testing with using four motors on the drivetrain.
 
 ### Intake mechanism
 
 ### Launcher mechanism
 
+The launcher mechanism was the part which took the most time. It also has an unorthodox design. It uses a motor to stretch a rubber band and hold it in the tensioned position, then a pneumatic piston pushes a gear to release the axle from the motor. This causes the tension to release all at once and launch the triball. As you might expect, this design is a bit unreliable, but designs like this really show our creativity when we are short on resources. We did not have flex wheels or fly wheels or 600 RPM motors, and we could not afford anything. You can see the problems here.
+
 ## Problems encountered
 
 ### Pneumatics failure
+
 During building and the competition, we had a habit of inflating the pneumatics tank to above its maximum rated pressure to try and fit more air in it. We did not realize that this would lead to a failure of the bike pump valve, such that it would not hold air anymore. So any mechanism involving pneumatics was off the table, such as our triball launcher. We had to change our strategy at this point. 
 
-Later we had solved this problem by sealing the end of the tank with the bike pump valve, and instead using the tubes themselves to connect to the small end of the bike pump.
+So we could not launch triballs any more. Our only option left was to push around other robots (with two motors?) or to just push triballs into the nets. Even that had problems.
+
+Much later, we had solved this problem by sealing the end of the tank with the bike pump valve, and instead using the tubes themselves to connect to the small end of the bike pump.
 
 ### `JiggleIt` function
+
+
 
 ### Stuck on a triball
 During one of the games in the competition (Over Under), the robot got stuck on a triball, and was unable to move for the rest of the game. This reflects the fact that we iterated the design a lot on-site, and had no time to test or drive it. Otherwise, such an issue would have been easily detected.
@@ -68,6 +77,7 @@ Usually when we build drivetrains, it would be difficult to change the gearing o
 
 ## What we learned
 Ultimately this design was never used for anything. But we took away these points:
+
   * The point is not speed or torque, but rather balance. A high speed robot is difficult to control, while a high torque robot is sluggish.
   * Acceleration is not particularly important. A robot with twice the top speed and half the torque will reach the same speed as the robot which doesn't, and then continue to speed up.
   * Modularity is very important, especially since we do not yet use CAD for designing robots. This allows for rapid iteration.
@@ -77,6 +87,8 @@ Ultimately this design was never used for anything. But we took away these point
 
 ## Design
 
+### Donut picker-upper
+This design was possibly the most iterated throughout the project, as this would determine whether the robot could even do anything.
 
 ### Switch from iron to aluminium
 The reason that we used iron in the past is because we were concerned that aluminium, though light, would not provide sufficient strength. However, we realized that,
@@ -105,14 +117,20 @@ The reason that we used iron in the past is because we were concerned that alumi
 
 ### Pneumatic stake grabber
 
+Of course, we needed a mechanism to grab the stakes, so that we could possess them and put donuts on them. We decided on a design which grabs the stakes by the rim from the bottom, and lifts them up. This had to be a decision made 
+
 #### Redesign
 
 ### Intake mechanism
 When trying to pick up the robot, the problem always was that the hook would push the donut away before picking it up. We decided that the solution to this was a roller which forces the donut towards the robot.
 
-\includegraphics[width=1.0\textwidth]{media/metal_cross_sections.png}
+\includegraphics[width=0.5\textwidth]{media/roller_mechanism_gearing.jpg}
+\includegraphics[width=0.5\textwidth]{media/roller_mechanism_with_donut.jpg}
+
+The interesting thing here is that the roller is powered by the same motor as the donut picker-upper. It goes through some gears to step up the speed and through a chain to get it into the right place. We wanted to maintain flexibility in our motor allocation, which is specifically the reason why we chose a four motor drivetrain and a pneumatic stake grabber. We still have three motors left to do whatever we need, like the elevation.
 
 #### Removing the intake mechanism
+After testing, we realized that the mechanism was actually redundant. Just the axle's presence alone coerces the donuts into the correct position for the elevator. This simplified the design greatly, and worked surprisingly well. The rollers were not even working to move the donut, and the way it was held on means that it could be rendered pointless in field conditions.
 
 ## Programming
 
@@ -274,6 +292,7 @@ This is the first design we used for the elevation system, not including using t
 This design uses a metal beam on a rail. It is tensioned into the open position by a rubber band which is pulling the head of one part to the tail of another part. The winch system pulls the ends together against the rubber band. To use it, the tension on the mechanism is released by the motor, allowing it to extend and reach the second rung of the ladder. The motor is turned around, pulling the parts together and pulling the robot up. The motor itself is geared for torque, along with being a red motor.
 
 Limitations of this design:
+
 * If we are not careful, the rails could slip, separating them.
 * The rubber band could snap, disabling the system. Especially since the rubber band is stretched a lot and the robot may be transported in the cold.
 * The design is very dangerous. If the motor is disabled in the tensioned position, it suddenly becomes impossible to release the mechanism, unless the brake mode on the motor is disabled.
@@ -357,8 +376,44 @@ There is a caveat, though. This does not apply to our system because the rubber 
 
 ## November 11
 
-### Problems encountered
+### Problems and questions
 
-### How we fixed them
+* How are we going to make it so that the elevation system isn't under so much tension? Tension causing:
+  * Motor strain.
+  * Potential unlocking when elevation is scored.
+  * Danger to people near the robot.
 
-### What we learned
+* How do we make the drivetrains stronger?
+
+* What do other teams do?
+  * How many manual points and autonomous points?
+  * How do they score the points?
+  * Can they score elevation points?
+  * How much torque and acceleration do they have?
+  * What is their offensive and defensive strategy?
+
+* To do: fix the two robots
+  * One has bent metal.
+  * The other had half of its wheels fall off.
+
+* How are we going to tackle the autonomous period?
+
+* Can we climb higher on the ladder?
+
+### What we did
+
+
+* We decided to make a Google Forms to allow us to scout other teams in a consistent manner, logging:
+
+  1. Are they playing an offensive or defensive strategy?
+  2. What was special about their robot?
+
+* Partially disassemble both robots, and cut axles. Our main problem with the wheels and gears in the drivetrain was that our axles were either too long or too short. This, we believe, will resolve the drivetrain strength issues. Also, we should implement safety protocols to prevent the robots from driving off the tables and destroying themselves.
+
+* As for the ladder, we are working on improving the elevation system first, then climbing higher on the ladder.
+
+* The important thing at this stage is testing the robots. By testing them, we quickly figured out the numerous flaws with the robots, allowing us to address them. We need to accelerate our progress, though.
+
+## November 12
+
+### Problems and questions
