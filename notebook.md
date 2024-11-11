@@ -9,6 +9,8 @@ toc: true
 toc-own-page: true
 page-background: "media/background.pdf"
 page-background-opacity: 0.15
+header-includes:
+  - \usepackage{cancel}
 ...
 
 # About us
@@ -106,18 +108,11 @@ The reason that we used iron in the past is because we were concerned that alumi
 #### Redesign
 
 ### Intake mechanism
+When trying to pick up the robot, the problem always was that the hook would push the donut away before picking it up. We decided that the solution to this was a roller which forces the donut towards the robot.
+
+\includegraphics[width=1.0\textwidth]{media/metal_cross_sections.png}
 
 #### Removing the intake mechanism
-
-### Elevation system
-
-\includegraphics[width=0.8\textwidth]{media/elevation_design_side_view.jpg}
-
-This is the first design we used for the elevation system, not including using the clawbot claw for this.
-
-\includegraphics[width=1.0\textwidth]{media/elevation_mechanism_close_up.png}
-
-This design uses a metal beam on a rail. It is tensioned into the open position by a rubber band which is pulling the head of one part to the tail of another part. The winch system pulls the ends together against the rubber band. To use it, the tension on the mechanism is released by the motor, allowing it to extend and reach the second rung of the ladder. The motor is turned around, pulling the parts together and pulling the robot up. The motor itself is geared for torque, but
 
 ## Programming
 
@@ -266,6 +261,25 @@ While the team was iterating over the design of Allen 2.1, we wanted to explore 
 ## Design
 Barron was designed to be a sort of opposite to Allen. Allen is heavy and has a low centre of mass, while Barron is light. Barron is very wide, barely within the size limit, while Allen has a compact form, focusing on height instead.
 
+### Elevation system
+
+We used Barron to test the elevation systems that would eventually be used on Allen, as Allen was broken at the time.
+
+\includegraphics[width=0.8\textwidth]{media/elevation_design_side_view.jpg}
+
+This is the first design we used for the elevation system, not including using the clawbot claw for this.
+
+\includegraphics[width=1.0\textwidth]{media/elevation_mechanism_close_up.png}
+
+This design uses a metal beam on a rail. It is tensioned into the open position by a rubber band which is pulling the head of one part to the tail of another part. The winch system pulls the ends together against the rubber band. To use it, the tension on the mechanism is released by the motor, allowing it to extend and reach the second rung of the ladder. The motor is turned around, pulling the parts together and pulling the robot up. The motor itself is geared for torque, along with being a red motor.
+
+Limitations of this design:
+* If we are not careful, the rails could slip, separating them.
+* The rubber band could snap, disabling the system. Especially since the rubber band is stretched a lot and the robot may be transported in the cold.
+* The design is very dangerous. If the motor is disabled in the tensioned position, it suddenly becomes impossible to release the mechanism, unless the brake mode on the motor is disabled.
+* The design could put stress on the motor, causing it to overheat.
+* There is a knot in the string, as it is two strings tied together.
+
 ## Programming
 Barron shares the same code with Allen, but with a few changes. It was annoying to change the configuration code every time, and it didn't make sense to have two copies of code that always changes, so I came up with this solution:
 ```python
@@ -287,11 +301,19 @@ This way, anything that is different about the robots is stored in the configura
 # Mathematical techniques
 
 ## Motor curve
+One interesting discovery is the curve which regulates the speed of motors.
+
 
 ## Drivetrain calculator spreadsheet
-`Written by Aseer`
+`Aseer`
+
 This was a side project which turned out to be pretty useful for deciding on drivetrains. There is a lot you can calculate about a drivetrain just based on its gear and motor configuration. However, doing all the calculations by hand is pretty tedious and time consuming. What tool is good for doing a series of calculations and presenting it in a nice graphical format? A spreadsheet.
 
+\includegraphics[width=1.0\textwidth]{media/calculator_screenshot.png}
+
+> Note: This spreadsheet does not account for friction, and for certain drivetrains may be broken (values are negative). It also sometimes gives ridiculous results as it does not account for startup friction. I also don't know how to verify this tool.
+
+If we are deciding which gear ratio to use, this tool can be really useful.
 
 ## Elevation calculations
 It turns out that it's not that complicated to calculate how much power you need for elevation. You can use normal kinematics, or you could just reframe the problem as "how much energy do I need?" Since we are lifting the robot off the ground, we can use the formula for gravitational potential energy:
@@ -306,13 +328,37 @@ Given the gravitational potential energy and the power of the motors, we can cal
 
 We can also calculate how many rotations the robot has to make using these formulas:
 
-$$
-C = \pi d"total rotations" \newline
-\text{Total rotations} = \frac{h}{C} \
-\text{Revolutions per minute} = \frac{\text{Rotations}}{\Delta t} * 60 \frac {s}{m}
-$$
+\begin{align*}
+  & C = \pi d \\
+  & \theta = \frac{h}{C} \\
+  & \Delta t = \frac{E}{P} \\
+  & E = mgh \\
+  & \omega = \frac{\theta}{\Delta t} \cdot 60 \frac{s}{m} \\
+\end{align*}
 
 Now we have everything we need, let's substitute in each of the formulas.
-$$
-\omega = \frac{60 \text{Revolutions}}{C} \text{Substitute Revolutions } = \frac{h}{C} \
-$$
+
+\begin{align*}
+  \omega & = \frac{60 \cdot \theta}{\Delta t} \quad \text{Substitute  } \theta = \frac{h}{C} \\
+  \omega & = \frac{60 \cdot \frac{h}{C}}{\Delta t} \\
+  \omega & = \frac{60 \cdot h}{C \Delta t} \quad \text{Substitute  } \Delta t = \frac{E}{P} \\
+  \omega & = \frac{60 \cdot h}{C \frac{E}{P}} \\
+  \omega & = \frac{60 \cdot h P}{C \cdot E} \quad \text{Substitute  } E = mgh \\
+  \omega & = \frac{60 \cdot \cancel{h} P}{C \cdot m g \cancel{h}} \\
+  \omega & = \frac{60 \cdot P}{C \cdot m g} \quad \text{Substitute  } C = \pi d \\
+  \omega & = \frac{60 \cdot P}{\pi d \cdot m g}\\
+\end{align*}
+
+And there it is, the magic formula. If you give $P$ as 11 watts, $d$ as the diameter of the winch spool in metres, $m$ as the mass of the robot in kilograms, and $g$ as gravity, you get the amount of RPM your winch should have at maximum.
+
+There is a caveat, though. This does not apply to our system because the rubber band pulls on the winch as well. So a 2x factor is used (half the RPM) is used. Any way to achieve a specific RPM will give the correct torque as long as the motor is running at full torque.
+
+# Pre-competition log
+
+## November 11
+
+### Problems encountered
+
+### How we fixed them
+
+### What we learned
