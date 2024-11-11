@@ -2,6 +2,10 @@
 
 build: build/notebook.pdf
 
+f:
+	touch notebook.md
+	make build
+
 clean:
 	rm build/*.pdf
 
@@ -15,4 +19,5 @@ build/content.pdf: notebook.md media/*
 	--resource-path=./media \
 	--eol=native \
 	--strip-comments \
-	--embed-resources
+	--embed-resources \
+	--pdf-engine=pdflatex
