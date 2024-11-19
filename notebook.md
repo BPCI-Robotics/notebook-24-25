@@ -1,7 +1,7 @@
 ---
-title: "Birchmount Robotics - Engineering Notebook - High Stakes 24-25"
-author: [Aseer Tayeem]
-date: "2024-10-10"
+title: "Engineering Notebook - High Stakes 24-25"
+author: ["Birchmount Robotics"]
+date: "{{{SET DATE ON RELEASE}}}"
 subject: "Robotics"
 keywords: [Robotics, VRC]
 lang: "en"
@@ -14,18 +14,12 @@ header-includes:
 ...
 
 # About us
-Hello! We are the VEX robotics team at Birchmount Park Collegiate Institute in Scarborough, ON.
+Hello! We are the VEX robotics team at Birchmount Park Collegiate Institute in Scarborough, ON. We have been active for about two years. In that time, we learned a lot as we worked together, failed, and triumphed. Our team is composed of exceptionally bright students who are either in the gifted program or might as well be in it. Our members have different strengths, and are really able to exercise their talents in the Robotics room.
 
-## Our members
-
-* **Tyler**: Tyler is very good at coming up with designs for anything from little contraptions to whole subsystems.
-* **Colin**: Colin is a good builder and designer, able to quickly construct new designs.
-
-* **Wesley**: Wesley has a firm grasp on programming principles, and can solve problems quickly.
-* **Aseer** Aseer is a good programmer who has a wide range of experience in different technologies.
+We will now walk you through the various robots and designs that we have worked on in the past, and what we learned from them. Everything we learned from our previous designs would enable us to create better and better robots, eventually culminating in the robot we brought to this competition.
 
 # Allen
-Allen was the first robot we ever brought to a competition, and he served us well. He is named for our mascot Allen, who is the monkey responsible for bringing Allen wrenches to the team members. It was a very simple robot which had gone through many designs, as we were learning a lot about how to design robots.
+Allen was the first robot we ever brought to a competition, and he served us well. He is named for our mascot Allen, who is the monkey responsible for bringing Allen wrenches to the team members. It was a very simple robot which had gone through many designs, as we were learning a lot about VEX parts. We did not go through any tutorials, we simply learned by doing.
 
 ## Design
 
@@ -34,6 +28,7 @@ Allen was the first robot we ever brought to a competition, and he served us wel
 Allen was built on an all-iron drivetrain, based on the clawbot. It employed two motors to power the basic drive (motors directly to wheels, no gears). Later we had done some testing with using four motors on the drivetrain.
 
 ### Intake mechanism
+The intake system on Allen was a simple sprocket surrounded with chains that had flaps on them. This worked well enough and we weren't really sure how we could improve on this.
 
 ### Launcher mechanism
 
@@ -42,26 +37,26 @@ The launcher mechanism was the part which took the most time. It also has an uno
 ## Problems encountered
 
 ### Pneumatics failure
-
 During building and the competition, we had a habit of inflating the pneumatics tank to above its maximum rated pressure to try and fit more air in it. We did not realize that this would lead to a failure of the bike pump valve, such that it would not hold air anymore. So any mechanism involving pneumatics was off the table, such as our triball launcher. We had to change our strategy at this point. 
 
 So we could not launch triballs any more. Our only option left was to push around other robots (with two motors?) or to just push triballs into the nets. Even that had problems.
 
-Much later, we had solved this problem by sealing the end of the tank with the bike pump valve, and instead using the tubes themselves to connect to the small end of the bike pump.
+Much later, we had solved this problem by sealing the end of the tank with the bike pump valve, and instead using the tubes themselves to connect to the small outlet of the bike pump.
 
 ### `JiggleIt` function
-
-
+As mentioned previously, the triball launcher was unreliable, and often, almost guaranteed, the gears would jam, making it so the piston can't launch the triball. The solution to this was to add a controller binding to repeatedly extend and retract the piston to free the gear. Of course, this would use a bit of air, but we just did not have much else to do. We also switched to using a shorter piston to minimize air usage, as a shorter piston has the same force but a different extension. This is simply because the force of a piston is only determined by the thickness of the tube.
 
 ### Stuck on a triball
 During one of the games in the competition (Over Under), the robot got stuck on a triball, and was unable to move for the rest of the game. This reflects the fact that we iterated the design a lot on-site, and had no time to test or drive it. Otherwise, such an issue would have been easily detected.
 
 ### PROS
-`Written by Aseer`
+`Aseer`
 
 At this time, we were exploring new technologies. I was more experienced in C than Python, so I decided to explore different ways to write robot code. VEX offers native C++ support, but not C support, and there is a lack of documentation about the different methods, instead relying on Intellisense for showing the right methods. PROS offers C support in a simple package. OkapiLib makes writing autonomous code easy, but we never used it.
 
 As I was reading the tutorial, I realized that the C code was wrong, as it was using C++ syntax, so I submitted a pull request to fix it which was accepted.
+
+I'm really thinking about reconsidering PROS in the future. As we become more experienced in the essential parts of robotics in the manual control period, we can then begin to focus on how we can do the autonomous period.
 
 # Allen 2.0
 Allen 2.0 was a very interesting experiment, and we learned a lot building it. Designed by Tyler, it implemented the ideas that we would continue to use for future projects.
@@ -101,7 +96,7 @@ The reason that we used iron in the past is because we were concerned that alumi
 
   The reason for this can be seen on the bottom. When you push on a thin sheet of metal, the metal does not need to stretch much to bend. However, when you push a sheet of metal perpendicular to the direction you're pushing it, the end of it has to bend a whole lot more. If you managed to push it, the end would rip and the side you're pushing would buckle. This is much harder than, for example, bending a metal wire. 
 
-  For this reason, you can easily bend fiber optic cable, but it is very hard to bend a glass pane. Both are made of glass, one is thicker.
+  One example of structural properties is the strength of cardboard as compared to construction paper. Both have approximately the same amount of material, but cardboard is harder to bend.
 
 * **The weak points are the fasteners, not the metal.**
 
@@ -129,7 +124,7 @@ When trying to pick up the robot, the problem always was that the hook would pus
 
 The interesting thing here is that the roller is powered by the same motor as the donut picker-upper. It goes through some gears to step up the speed and through a chain to get it into the right place. We wanted to maintain flexibility in our motor allocation, which is specifically the reason why we chose a four motor drivetrain and a pneumatic stake grabber. We still have three motors left to do whatever we need, like the elevation.
 
-#### Removing the intake mechanism
+### Removing the intake mechanism
 After testing, we realized that the mechanism was actually redundant. Just the axle's presence alone coerces the donuts into the correct position for the elevator. This simplified the design greatly, and worked surprisingly well. The rollers were not even working to move the donut, and the way it was held on means that it could be rendered pointless in field conditions.
 
 ## Programming
@@ -280,7 +275,6 @@ While the team was iterating over the design of Allen 2.1, we wanted to explore 
 Barron was designed to be a sort of opposite to Allen. Allen is heavy and has a low centre of mass, while Barron is light. Barron is very wide, barely within the size limit, while Allen has a compact form, focusing on height instead.
 
 ### Elevation system
-
 We used Barron to test the elevation systems that would eventually be used on Allen, as Allen was broken at the time.
 
 \includegraphics[width=0.8\textwidth]{media/elevation_design_side_view.jpg}
@@ -402,7 +396,6 @@ There is a caveat, though. This does not apply to our system because the rubber 
 
 ### What we did
 
-
 * We decided to make a Google Forms to allow us to scout other teams in a consistent manner, logging:
 
   1. Are they playing an offensive or defensive strategy?
@@ -412,7 +405,7 @@ There is a caveat, though. This does not apply to our system because the rubber 
 
 * As for the ladder, we are working on improving the elevation system first, then climbing higher on the ladder.
 
-* The important thing at this stage is testing the robots. By testing them, we quickly figured out the numerous flaws with the robots, allowing us to address them. We need to accelerate our progress, though.
+* The important thing at this stage is testing the robots. By testing them, we had quickly figured out numerous flaws with the robots, allowing us to address them. We need to accelerate our progress, though.
 
 ## November 12
 
