@@ -20,4 +20,6 @@ cd ..
 rm eisvogel -r
 ```
 
+Note to self: if installing on Gentoo, don't turn off USE flags on the texlive package, because it'll probably break it.
+
 Then simply run `make`. The result will be in `build/notebook.pdf`
