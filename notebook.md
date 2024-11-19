@@ -21,7 +21,7 @@ We will now walk you through the various robots and designs that we have worked 
 # Allen
 Allen was the first robot we ever brought to a competition, and he served us well. He is named for our mascot Allen, who is the monkey responsible for bringing Allen wrenches to the team members. It was a very simple robot which had gone through many designs, as we were learning a lot about VEX parts. We did not go through any tutorials, we simply learned by doing.
 
-\includegraphics[width=1.0\textwidth]{media/allen_1.png}
+\includegraphics[width=1.0\textwidth]{media/allen_1.jpg}
 
 ## Design
 
@@ -102,10 +102,10 @@ We were also trying different ways to attach the hook, like with a rubber band t
 That's when we started fashioning hooks out of polypropylene. These definitely worked, though we did break a few. It must have been the flexibility that made them work effectively.
 
 #### The chain
-We added an additional sprocket to tension the chain without just having fewer chain links. This we kept in the final design.
+We added an additional sprocket to tension the chain without just having fewer chain links. This we kept in the final design. Otherwise the chain would either be too tight or too loose.
 
 ### Switch from iron to aluminium
-The reason that we used iron in the past is because we were concerned that aluminium, though light, would not provide sufficient strength. However, we realized that,
+The reason that we used iron in the past is because we were concerned that aluminium, though light, would not provide sufficient strength. However, we realized that:
 
 * **Strength is more determined by geometry.**
     
@@ -135,7 +135,7 @@ Of course, we needed a mechanism to grab the stakes, so that we could possess th
 
 #### Redesign
 
-Actually, after this, we switched to a different design. Now the robot pushes down the stakes to move them around. What is the purpose of this?
+After this, we switched to a different design. Now the robot pushes down the stakes to move them around. A pneumatic piston drags the top of the stake around the ground. It pushes it down so that it is angled towards the robot, and so that the hook can put donuts on it.
 
 ### Intake mechanism
 When trying to pick up the robot, the problem always was that the hook would push the donut away before picking it up. We decided that the solution to this was a roller which forces the donut towards the robot.
@@ -463,4 +463,17 @@ At this point, we wanted to lock in the design before the competition, as any br
 ### PROS
 Someone suggested using OkapiLib to program the robot. This would be considered a breaking change and a time consuming one, so like other projects, it was delayed until after the competition. This is because we would need to port our code to C/C++, which wouldn't be difficult but there are two programmers on the team, only one of them knows C. However, this would be very beneficial. This is because:
 
-* Micropython is very limiting: it lacks not only syntactical sugar like f-strings but also the ability to import other files as modules. This makes it easier to get lost in the long single-file codebase and its global variables. It also does not come with every Python standard module, not just the obvious ones like `os`.
+* Micropython is very limiting: it lacks not only syntactical sugar like f-strings but also the ability to import other files as modules. This makes it easy to get lost in the long single-file codebase and its global variables. It also does not come with every Python standard module, not just the obvious ones like `os`.
+
+* Python isn't often used to code robots in the industry. For this, low-level languages like C are often used, especially to interface with a real-time kernel like PROS uses. Though it is more complex overall, you gain a lot more fine-grained control and performance, though for the VEX brain performance is irrelevant.
+
+* OkapiLib provides many facilities to make it easier to code the autonomous period. This will definitely help us to win autonomous points in future competitions.
+
+### Problems encountered
+The robot still gets stuck on donuts. We also just have a lack of special things about the robot. It does not have an autonomous system and it does not have an elevation system. We don't have time for this as the day comes closer.
+
+## Tue, November 19
+
+### What we did
+
+### Problems encountered
