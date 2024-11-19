@@ -21,6 +21,8 @@ We will now walk you through the various robots and designs that we have worked 
 # Allen
 Allen was the first robot we ever brought to a competition, and he served us well. He is named for our mascot Allen, who is the monkey responsible for bringing Allen wrenches to the team members. It was a very simple robot which had gone through many designs, as we were learning a lot about VEX parts. We did not go through any tutorials, we simply learned by doing.
 
+\includegraphics[width=1.0\textwidth]{media/allen_1.png}
+
 ## Design
 
 ### Drivetrain
@@ -28,18 +30,20 @@ Allen was the first robot we ever brought to a competition, and he served us wel
 Allen was built on an all-iron drivetrain, based on the clawbot. It employed two motors to power the basic drive (motors directly to wheels, no gears). Later we had done some testing with using four motors on the drivetrain.
 
 ### Intake mechanism
-The intake system on Allen was a simple sprocket surrounded with chains that had flaps on them. This worked well enough and we weren't really sure how we could improve on this.
+The intake system on Allen was a simple sprocket surrounded with chains that had flaps on them. This worked well enough and we weren't really sure how we could improve on this. It allowed the robot to pull in a triball, continue to possess it, and eject it into a goal.
 
 ### Launcher mechanism
 
 The launcher mechanism was the part which took the most time. It also has an unorthodox design. It uses a motor to stretch a rubber band and hold it in the tensioned position, then a pneumatic piston pushes a gear to release the axle from the motor. This causes the tension to release all at once and launch the triball. As you might expect, this design is a bit unreliable, but designs like this really show our creativity when we are short on resources. We did not have flex wheels or fly wheels or 600 RPM motors, and we could not afford anything. You can see the problems here.
+
+We used a design like this because of how the Over Under game worked. The best strategy was to have a robot which repeatedly launches balls in the preload period, and then to push the pile of balls into the goal.
 
 ## Problems encountered
 
 ### Pneumatics failure
 During building and the competition, we had a habit of inflating the pneumatics tank to above its maximum rated pressure to try and fit more air in it. We did not realize that this would lead to a failure of the bike pump valve, such that it would not hold air anymore. So any mechanism involving pneumatics was off the table, such as our triball launcher. We had to change our strategy at this point. 
 
-So we could not launch triballs any more. Our only option left was to push around other robots (with two motors?) or to just push triballs into the nets. Even that had problems.
+So we could not launch triballs any more. In the picture is the final robot we had to use when we had no launcher mechanism. Our only option left was to push around other robots (with two motors?) or to just push triballs into the nets. Even that had problems.
 
 Much later, we had solved this problem by sealing the end of the tank with the bike pump valve, and instead using the tubes themselves to connect to the small outlet of the bike pump.
 
@@ -47,9 +51,12 @@ Much later, we had solved this problem by sealing the end of the tank with the b
 As mentioned previously, the triball launcher was unreliable, and often, almost guaranteed, the gears would jam, making it so the piston can't launch the triball. The solution to this was to add a controller binding to repeatedly extend and retract the piston to free the gear. Of course, this would use a bit of air, but we just did not have much else to do. We also switched to using a shorter piston to minimize air usage, as a shorter piston has the same force but a different extension. This is simply because the force of a piston is only determined by the thickness of the tube.
 
 ### Stuck on a triball
-During one of the games in the competition (Over Under), the robot got stuck on a triball, and was unable to move for the rest of the game. This reflects the fact that we iterated the design a lot on-site, and had no time to test or drive it. Otherwise, such an issue would have been easily detected.
+During one of the games in the competition (Over Under), the robot got stuck on a triball, and was unable to move for the rest of the game. This reflects the fact that we iterated the design a lot on-site, and had no time to test or drive it. Otherwise, such an issue would have been easily detected. This also ties into another design issue which is that the robot's drivetrain was much wider than it was long. This odd geometry is not beneficial at all, worsening the problem of lifting on acceleration.
 
-### PROS
+### Disassembly on the field
+This problem is quite simple. We never liked nylock nuts because they are hard to screw on, and hard to remove, slowing the build process. But they are important. Since we were using keps nuts for the drivetrain, they would often fall off. We did not expect this to happen, and it taught us where strength is important on the robot, and how screws and nuts don't behave the way one may expect.
+
+## PROS
 `Aseer`
 
 At this time, we were exploring new technologies. I was more experienced in C than Python, so I decided to explore different ways to write robot code. VEX offers native C++ support, but not C support, and there is a lack of documentation about the different methods, instead relying on Intellisense for showing the right methods. PROS offers C support in a simple package. OkapiLib makes writing autonomous code easy, but we never used it.
@@ -76,14 +83,26 @@ Ultimately this design was never used for anything. But we took away these point
   * The point is not speed or torque, but rather balance. A high speed robot is difficult to control, while a high torque robot is sluggish.
   * Acceleration is not particularly important. A robot with twice the top speed and half the torque will reach the same speed as the robot which doesn't, and then continue to speed up.
   * Modularity is very important, especially since we do not yet use CAD for designing robots. This allows for rapid iteration.
-  * 
+  * For quick prototyping, keps nuts (the ones with the built-in washer) are effective because they hold well enough and are easy to add or remove. However, they will definitely fall off, so when the design is finalized, they should be replaced with nylock nuts.
 
 # Allen 2.1
 
 ## Design
 
 ### Donut picker-upper
-This design was possibly the most iterated throughout the project, as this would determine whether the robot could even do anything.
+This design was possibly the most iterated throughout the project, as this would determine whether the robot could even do anything. The design is based around a chain which goes from the front of the robot to the top of it at the back, where the stake is attached.
+
+\includegraphics[width=0.8\textwidth]{media/triangle_grabbing_donut.jpg}
+
+#### Hook design
+First we started with making hooks out of metal. We tried small ones, long ones, wide ones, using the claw from the old version of the clawbot, those weird plus pieces. None of them worked consistency and it all felt like it was in vain. Either they would get stuck on the stake, or not even pick up a donut. It wasn't useless though. Now we know with reasonable confidence that metal hooks don't work, at least not the ones we tried.
+
+We were also trying different ways to attach the hook, like with a rubber band tensioning system, different size sprockets at the top.
+
+That's when we started fashioning hooks out of polypropylene. These definitely worked, though we did break a few. It must have been the flexibility that made them work effectively.
+
+#### The chain
+We added an additional sprocket to tension the chain without just having fewer chain links. This we kept in the final design.
 
 ### Switch from iron to aluminium
 The reason that we used iron in the past is because we were concerned that aluminium, though light, would not provide sufficient strength. However, we realized that,
@@ -112,9 +131,11 @@ The reason that we used iron in the past is because we were concerned that alumi
 
 ### Pneumatic stake grabber
 
-Of course, we needed a mechanism to grab the stakes, so that we could possess them and put donuts on them. We decided on a design which grabs the stakes by the rim from the bottom, and lifts them up. This had to be a decision made 
+Of course, we needed a mechanism to grab the stakes, so that we could possess them and put donuts on them. We decided on a design which grabs the stakes by the rim from the bottom, and lifts them up. This was the usual strategy for teams as it puts less friction between the stake and the field mats. 
 
 #### Redesign
+
+Actually, after this, we switched to a different design. Now the robot pushes down the stakes to move them around. What is the purpose of this?
 
 ### Intake mechanism
 When trying to pick up the robot, the problem always was that the hook would push the donut away before picking it up. We decided that the solution to this was a roller which forces the donut towards the robot.
@@ -316,6 +337,18 @@ This way, anything that is different about the robots is stored in the configura
 ## Motor curve
 One interesting discovery is the curve which regulates the speed of motors.
 
+\includegraphics[width=1.0\textwidth]{media/vex_smart_motor_curve.png}
+
+This is not intuitive at all unless one is looking for it. It's also not the solution one may expect. It is easy to program around it, though. When the speed is below a certain amount, set it to exactly whatever the magic number is (around 63) where the motor uses the most power. When it goes above that, switch to whatever speed the controller is set to. This allows you to use maximum torque, and therefore acceleration, for most of the velocity curve of the robot, while still being able to reach maximum speed.
+
+The motor control curve also approximately snaps to 63 when the controller is near that range, because sometimes you want maximum power. This is good for pushing other robots or perhaps un-stucking the robot.
+
+```python
+if abs(current_speed) < 55:
+    return sgn * 60
+else:
+    return sgn * max(logistic(val), 100)
+```
 
 ## Drivetrain calculator spreadsheet
 `Aseer`
@@ -326,7 +359,7 @@ This was a side project which turned out to be pretty useful for deciding on dri
 
 > Note: This spreadsheet does not account for friction, and for certain drivetrains may be broken (values are negative). It also sometimes gives ridiculous results as it does not account for startup friction. I also don't know how to verify this tool.
 
-If we are deciding which gear ratio to use, this tool can be really useful.
+When we are deciding which gear ratio to use, this tool can be really useful.
 
 ## Elevation calculations
 It turns out that it's not that complicated to calculate how much power you need for elevation. You can use normal kinematics, or you could just reframe the problem as "how much energy do I need?" Since we are lifting the robot off the ground, we can use the formula for gravitational potential energy:
@@ -368,7 +401,7 @@ There is a caveat, though. This does not apply to our system because the rubber 
 
 # Pre-competition log
 
-## November 11
+## Mon, November 11
 
 ### Problems and questions
 
@@ -407,6 +440,27 @@ There is a caveat, though. This does not apply to our system because the rubber 
 
 * The important thing at this stage is testing the robots. By testing them, we had quickly figured out numerous flaws with the robots, allowing us to address them. We need to accelerate our progress, though.
 
-## November 12
+### Tue, November 12
 
-### Problems and questions
+### What we did
+`Aseer`
+
+I decided to test the autonomous capabilities of the robot. I decided to add a drivetrain to the code, making measurements. We do not have a gyro or anything fancy, so it was up to the encoders inside the motors and the VEX standard library to do calculations.
+
+## Thu, November 14
+
+### What we did
+This was the first day that we mostly devoted to letting the drivers practice on the field. We had assigned drivers by this point. Before we didn't see the point in assigning separate responsibilities for drivers and builders, but now we understand that this can increase efficiency. Especially considering that robotics has many members, some of them don't have anything to do.
+
+### Problems encountered
+Actually, the drive test went surprisingly well, but there was one glaring issue, which [reminded us of an earlier issue](#stuck-on-a-triball). The robot could drive onto a donut and get stuck. We didn't address this immediately, as the drivers were still getting used to the controls. The controls also didn't need much adjustment.
+
+## Mon, November 18
+
+### What we did
+At this point, we wanted to lock in the design before the competition, as any breaking changes could lead to having an incomplete non-functional robot before the competition. So we resisted most changes. Current projects would have to run independently from the competition robot, such as the elevation system and a complex sensing autonomous system. For autonomous we settled on just using a simple blind "go forward and do this" autonomous system. We did not see complex autonomous systems anyway, so this made sense.
+
+### PROS
+Someone suggested using OkapiLib to program the robot. This would be considered a breaking change and a time consuming one, so like other projects, it was delayed until after the competition. This is because we would need to port our code to C/C++, which wouldn't be difficult but there are two programmers on the team, only one of them knows C. However, this would be very beneficial. This is because:
+
+* Micropython is very limiting: it lacks not only syntactical sugar like f-strings but also the ability to import other files as modules. This makes it easier to get lost in the long single-file codebase and its global variables. It also does not come with every Python standard module, not just the obvious ones like `os`.
