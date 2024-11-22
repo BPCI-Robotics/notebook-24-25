@@ -1,7 +1,7 @@
 ---
 title: "Engineering Notebook - High Stakes 24-25"
 author: ["Birchmount Robotics"]
-date: "{{{SET DATE ON RELEASE}}}"
+date: "Fri, November 22, 2024"
 subject: "Robotics"
 keywords: [Robotics, VRC]
 lang: "en"
@@ -479,13 +479,6 @@ We finally fixed the issue where the robot would get stuck on a donut. This just
 
 We also continued work on the elevation system. The new design involves three sections which nicely fold into each other.
 
-### Problems encountered
-
-## Wed, November 20
-
-### What we did
-
-
 ## Thu, November 21
 
 ### What we did
@@ -589,8 +582,3 @@ Due to the time pressure, there were a lot of things that we decided not to do. 
   - This has already been discussed in detail.
 
 There is a lot to get done, and it's not like we finished everything today. Today was just the beginning, the day we became a proper VEX Robotics team. We should take a break, though, as these past two weeks have been tough.
-
-### What we learned
-By this point, we had already overcome the hurdle of figuring out everything, what all the parts did, how to do anything. Now we are competing at a regular level. The next hurdle is how can we make it to Provincials, or even Worlds if we are ambitious. Do we even want to go out of our way to do that? Can we afford it?
-
-We learned something about ourselves. When we are focused, we can do great things. The team is overflowing with talent, but most of the time we are distracted. We don't have any leadership at all. And nobody would ever bow to student leadership. 
