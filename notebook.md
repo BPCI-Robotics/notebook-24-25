@@ -475,5 +475,8 @@ The robot still gets stuck on donuts. We also just have a lack of special things
 ## Tue, November 19
 
 ### What we did
+We finally fixed the issue where the robot would get stuck on a donut. This just involved adjusting the motors a little bit.
+
+We also continued work on the elevation system. The new design involves three sections which nicely fold into each other.
 
 ### Problems encountered
