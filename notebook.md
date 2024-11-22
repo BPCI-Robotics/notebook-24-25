@@ -480,3 +480,117 @@ We finally fixed the issue where the robot would get stuck on a donut. This just
 We also continued work on the elevation system. The new design involves three sections which nicely fold into each other.
 
 ### Problems encountered
+
+## Wed, November 20
+
+### What we did
+
+
+## Thu, November 21
+
+### What we did
+Today, we started packing up everything and making final changes. Work is still being done to improve the reliability of the elevation system, and to make sure that it fits within the size constraint.
+
+Today:
+
+- More driving practice was done.
+- The rudimentary autonomous system was quickly drafted and tested.
+- The elevation system was improved such that it caught on itself less often.
+- The code was heavily cleaned up.
+
+### Elevation system
+
+The issue encountered with the elevation system is that it would fit within the size limit when the motor is active, but expands a little bit when the motor is turned off. The system hardly fits within the size limit anyway. Some tweaks must be made to the design to allow it to fit.
+
+You may ask, why are we working on the elevation system if we are not going to add anything? This is a sort of exception. The condition is that if the system can be made to work in time, it will be added. It's not a problem if it doesn't work, because it is only attached to the robot by three nuts and screws.
+
+Here are some pictures:
+
+\includegraphics[width=0.5\textwidth]{media/elevation_system_bottom.jpg}
+\includegraphics[width=0.5\textwidth]{media/elevation_system_middle.jpg}
+
+\includegraphics[width=0.5\textwidth]{media/elevation_system.jpg}
+\includegraphics[width=0.5\textwidth]{media/elevation_system_latch.jpg}
+
+One big limitation of the elevation is that, of course, it gets jammed. Part of this is because we do not have access to the usual pieces used for linear movement, like perhaps a rack-and-pinion system. Or at least a piece to make the pieces slide smoothly. It's all metal against metal. With that being said, it works.
+
+### Code cleanup
+
+\includegraphics[width=0.8\textwidth]{media/commit_history.png}
+
+Without changing the code, we managed to remove a bunch of lines while also making the code clearer. This involved removing commented out code, removing global variables, and rescoping variables. The kill switch system was removed, as well as the ability to switch between two robots. This cleanup reduced the lines of code from 260 to 180.
+
+This was an important learning experience. Especially as we switch to C/C++, readability and maintainability will be harder to achieve, especially through rapid iteration. 
+
+This was experimented with before. There are some hacks with the C preprocessor which can make code more concise. For example,
+
+```c
+#define pressed(x)  controller_get_digital(CONTROLLER_MASTER, DIGITAL_##x)
+
+void opcontrol() {
+    // ...
+    if pressed(L1) {
+        do_something();
+    }
+    // ...
+}
+```
+
+### Autonomous
+The autonomous period is simple. All it does is move backwards to capture a stake, then puts the preloaded donut on it. Tomorrow, we will try to make the autonomous system pick up the field donuts. This will also be useful in the autonomous skills challenges.
+
+### Intake bar
+The intake bar was changed for a thicker one, as the donuts would end up bending the thinner one.
+
+\includegraphics[width=0.5\textwidth]{media/latest_intake_bar.jpg}
+
+## Fri, November 22
+
+### What we did
+Today was the last day before the competition.
+
+- We finalized packing up and loaded everything into the teacher's car.
+- We continued work on the autonomous system and the autonomous period.
+- We did not do much driver practice today, as autonomous was a priority. The autonomous system is immature as we just made it yesterday.
+- We indexed everything that we would be carrying to make sure that we could not forget everything.
+
+## Thoughts
+
+### Plans for the future
+Due to the time pressure, there were a lot of things that we decided not to do. Things that we decided to tackle later. 
+
+- Score on the high stake.
+  - This would involve having a completely different donut-placing system, as the current one targets a stake in possession.
+
+- Improve the autonomous system.
+  - It should be able to pick up multiple donuts from the field in the autonomous period.
+  - Perhaps it should use a sensing system instead of just a blind program. However this may be less reliable.
+
+- Make the elevation system more reliable.
+  - This is needed to score on the high stake anyway.
+  - It also means that we won't have a situation where the robot gets stuck in the elevation position while the other teams move our stakes to the minus zone.
+
+- Make the elevation system faster
+  - There's two things to look at here: how can we increase the power in the winch, and how can we improve the design in general.
+  - Two motors on the winch could make it faster just by the torque. A better idea is to gear both of them 2:1 to double the speed. This provides equivalent torque but at twice the speed.
+  - This will also address the minus zone problem, as it makes it take less time to elevate.
+
+- Figure out how to knock over stakes, or how to right them.
+  - This is because a common strategy is to knock over stakes so that it is difficult to move them into another zone or to descore them.
+  - Since stakes are bottom-heavy, it is hard to knock them over simply by ramming into them. A special mechanism may be needed.
+  - The same mechanism could even right a stake.
+
+- Try to improve the controls.
+  - We only addressed the control curve once. There could be a better control curve that we are missing out on, though. The drivers expressed that they have no problem with the current controls, but we could possibly improve performance with better controls
+
+  - For example, it could be a step function with certain set speeds. Often you don't need to go at a specific speed. Just at 0%, 50%, 100%.
+
+- Program in PROS.
+  - This has already been discussed in detail.
+
+There is a lot to get done, and it's not like we finished everything today. Today was just the beginning, the day we became a proper VEX Robotics team. We should take a break, though, as these past two weeks have been tough.
+
+### What we learned
+By this point, we had already overcome the hurdle of figuring out everything, what all the parts did, how to do anything. Now we are competing at a regular level. The next hurdle is how can we make it to Provincials, or even Worlds if we are ambitious. Do we even want to go out of our way to do that? Can we afford it?
+
+We learned something about ourselves. When we are focused, we can do great things. The team is overflowing with talent, but most of the time we are distracted. We don't have any leadership at all. And nobody would ever bow to student leadership. 
