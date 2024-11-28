@@ -1,7 +1,7 @@
 ---
 title: "Engineering Notebook - High Stakes 24-25"
 author: ["Birchmount Robotics"]
-date: "Fri, November 22, 2024"
+date: "{{TODO: SET DATE ON RELEASE}}"
 subject: "Robotics"
 keywords: [Robotics, VRC]
 lang: "en"
@@ -582,3 +582,10 @@ Due to the time pressure, there were a lot of things that we decided not to do. 
   - This has already been discussed in detail.
 
 There is a lot to get done, and it's not like we finished everything today. Today was just the beginning, the day we became a proper VEX Robotics team. We should take a break, though, as these past two weeks have been tough.
+
+# Post-competition reflections
+
+## Action plan
+From what we learned from the competition, we formulated an action plan for how we would improve the robot. Actually, we would rebuild the entire robot from scratch, as we are going to replace our drivetrain motors. The design seemed fundamentally flawed anyway, so rebuilding from scratch would allow us to fully realize our vision for a competitive robot. This would be the one that brings us from being a lower-mid team to a higher-mid, nearly good team.
+
+# {{TODO: Name the robot}}
