@@ -583,9 +583,32 @@ Due to the time pressure, there were a lot of things that we decided not to do. 
 
 There is a lot to get done, and it's not like we finished everything today. Today was just the beginning, the day we became a proper VEX Robotics team. We should take a break, though, as these past two weeks have been tough.
 
-# Post-competition reflections
-
 ## Action plan
 From what we learned from the competition, we formulated an action plan for how we would improve the robot. Actually, we would rebuild the entire robot from scratch, as we are going to replace our drivetrain motors. The design seemed fundamentally flawed anyway, so rebuilding from scratch would allow us to fully realize our vision for a competitive robot. This would be the one that brings us from being a lower-mid team to a higher-mid, nearly good team.
 
-# {{TODO: Name the robot}}
+# Hawk 1A
+Hawk 1A is a robot on an aluminium drivetrain. It has four 600 RPM motors and is geared down to a speed of 360 RPM on 3.25" wheels.
+
+Hawk 1A's drivetrain is more traditional, valuing speed over torque, as VEX motors have a pretty high torque anyway.
+
+## Design process
+
+### Four motors vs. six motors
+This was a pretty big debate, and one that we have had before. Obviously, having 1.5x more torque on the drivetrain is good. There are other benefits too.
+
+* Other teams' robots are less able to push the robot around, which helps in offensive/defensive situations like putting a stake in the positive corner.
+
+* The motors will generally heat up less. As long as the acceleration is limited to a reasonable amount, the motors will not overheat every single time we compete. After all, power consumption is proportional to torque, not to angular velocity. This means that running at full speed, a motor can use as little as 1 watt.
+
+* 
+### CAD
+
+## Programming
+
+### Choice of architecture
+
+### Concepts learned
+
+### Algorithms learned
+
+### Implementation
