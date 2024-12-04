@@ -589,7 +589,38 @@ There is a lot to get done, and it's not like we finished everything today. Toda
 Many mistakes were made during the competition, and our potential was not truly realized. In terms of ranking, we did about as well as we did last time. That is to say, not well. We tested our robot, though, and it worked really well, so what went so wrong?
 
 ### Height limit
-When one is forced to change the robot in such a way that it compromises the whole strategy, it is hard to recover from that. 
+When one is forced to change the robot in such a way that it compromises the whole strategy, it is hard to recover from that. It's weird that that happened to us twice. In the first competition it was because our pneumatics tank failed, this time it was because we were slightly over the height limit.
+
+A lot of time was spent just adjusting the donut subsystem for that very specific height. We thought it wouldn't be a problem that it was half an inch over the limit, but they did not allow the robot. So we had no choice but to change it.
+
+Of course to make sure that it works, it takes a lot of tuning. Now we have a donut elevator that is very unlikely to work. And it did not work. This was the main reason we were not successful.
+
+### Practice was inaccurate
+Of course we did a lot of driver practice this time, we would not make that mistake again. There were two problems with this, though. We changed our subsystem at the beginning of the competition, which seemed to completely change the dynamics of the robot. The practice also did not consider what the field conditions were like. In our practice, we:
+
+* Took our time to pick up a stake.
+* Picked up donuts one by one, with only the focus on the donuts.
+* Put the stake in the corner.
+
+But in the actual matches, we spent more time:
+
+* Defending the corner stakes against others.
+* Trying to get the other team's stake out of the positive corner.
+
+And we never picked up a donut. This is because our robot was not even capable of this, but the important observation is this:
+
+> Once there are a few full stakes, the game is to get them in the corners.
+
+There is no way to win otherwise, since your stake will be moved to the minus corner, or the other team capitalizes on the double points. Another observation was the importance of wall stakes, which we did not even think about. Mostly because we didn't have that many pneumatic parts. It seems that wall stakes are important, because they can be a tie breaker when all the teams have already put the stakes in the corners. Stakes which are very hard to move out of the corners.
+
+### Autonomous never worked
+When trying the autonomous system, it seemed to work just fine, but on the field, it did not catch the stake even once. It would attempt to catch the stake, but fail to hold on to it.
+
+The only time the robot actually scored in autonomous was when it captured the stake, picked up a single donut, and put it on. It actually dropped the preload donut because the code was wrong, and turned on the lift before picking the stake.
+
+We later realized why this is the case:
+- The unbalanced drivetrain meant that when decelerating quickly, the robot would tip, making it fail to catch the stake. 
+
 
 ## Action plan
 From what we learned from the competition, we formulated an action plan for how we would improve the robot. Actually, we would rebuild the entire robot from scratch, as we are going to replace our drivetrain motors. The design seemed fundamentally flawed anyway, so rebuilding from scratch would allow us to fully realize our vision for a competitive robot. This would be the one that brings us from being a lower-mid team to a higher-mid, nearly good team.
