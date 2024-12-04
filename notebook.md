@@ -619,11 +619,36 @@ When trying the autonomous system, it seemed to work just fine, but on the field
 The only time the robot actually scored in autonomous was when it captured the stake, picked up a single donut, and put it on. It actually dropped the preload donut because the code was wrong, and turned on the lift before picking the stake.
 
 We later realized why this is the case:
-- The unbalanced drivetrain meant that when decelerating quickly, the robot would tip, making it fail to catch the stake. 
+
+### The robot was too fast
+- The unbalanced drivetrain meant that when decelerating quickly, the robot would tip, making it fail to catch the stake.
+
+Because of the subsystem, the weight was extremely unbalanced on the robot. Whenever it would accelerate, it would tilt up, which would cause to lose grip and get stuck on donuts all the time.
+
+  \includegraphics[width=1.0\textwidth]{media/robot_tip_over.png}
+
+  In this picture, you can see the dynamics of the robot as it tried to pick up a stake in autonomous, or even in driver control. Keep in mind that forces which oppose each other in different areas will create a torque, even if they add to zero. 
+  
+  In the top left picture, there is no force on the robot, and it is simply moving forward.
+
+  In the top right picture, the brakes are slammed, which creates an opposing force on the bottom of the robot. However, at the top of the robot, there is still a bunch of inertia from the heavy donut elevator, so it continues to apply a force forward. This creates a torque which lifts the back of the robot.
+
+  In the bottom left picture, the overall torque on the robot reverses as this momentum is depleted, causing it to tip in the other direction due to gravity.
+
+  In the bottom right picture, the robot overshoots, causing it to let go of the stake. This is because of moment of inertia; since the robot is already rotating in that direction, it wants to continue rotating.
+
+- This also means that the robot would tip while accelerating too quickly.
+
+  
+  \includegraphics[width=1.0\textwidth]{media/robot_wheel_tipping.png}
 
 
 ## Action plan
 From what we learned from the competition, we formulated an action plan for how we would improve the robot. Actually, we would rebuild the entire robot from scratch, as we are going to replace our drivetrain motors. The design seemed fundamentally flawed anyway, so rebuilding from scratch would allow us to fully realize our vision for a competitive robot. This would be the one that brings us from being a lower-mid team to a higher-mid, nearly good team.
+
+The items were:
+
+* {{TODO}}
 
 # Hawk 1A
 Hawk 1A is a robot on an aluminium drivetrain. It has four 600 RPM motors and is geared down to a speed of 360 RPM on 3.25" wheels.
@@ -650,5 +675,3 @@ This was a pretty big debate, and one that we have had before. Obviously, having
 ## Programming
 
 ### Mistakes made
-
-* **The robot was too fast**: This doesn't sound like a problem, but because of the subsystem, the weight was extremely unbalanced on the robot. Whenever it would accelerate, it would tilt up, which would cause to lose grip and get stuck on donuts all the time. 
