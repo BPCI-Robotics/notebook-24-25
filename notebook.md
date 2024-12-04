@@ -1,7 +1,7 @@
 ---
 title: "Engineering Notebook - High Stakes 24-25"
 author: ["Birchmount Robotics"]
-date: "{{TODO: SET DATE ON RELEASE}}"
+date: "{{DATE}}"
 subject: "Robotics"
 keywords: [Robotics, VRC]
 lang: "en"
@@ -583,6 +583,14 @@ Due to the time pressure, there were a lot of things that we decided not to do. 
 
 There is a lot to get done, and it's not like we finished everything today. Today was just the beginning, the day we became a proper VEX Robotics team. We should take a break, though, as these past two weeks have been tough.
 
+# After the competition
+
+## Mistakes made
+Many mistakes were made during the competition, and our potential was not truly realized. In terms of ranking, we did about as well as we did last time. That is to say, not well. We tested our robot, though, and it worked really well, so what went so wrong?
+
+### Height limit
+When one is forced to change the robot in such a way that it compromises the whole strategy, it is hard to recover from that. 
+
 ## Action plan
 From what we learned from the competition, we formulated an action plan for how we would improve the robot. Actually, we would rebuild the entire robot from scratch, as we are going to replace our drivetrain motors. The design seemed fundamentally flawed anyway, so rebuilding from scratch would allow us to fully realize our vision for a competitive robot. This would be the one that brings us from being a lower-mid team to a higher-mid, nearly good team.
 
@@ -596,19 +604,20 @@ Hawk 1A's drivetrain is more traditional, valuing speed over torque, as VEX moto
 ### Four motors vs. six motors
 This was a pretty big debate, and one that we have had before. Obviously, having 1.5x more torque on the drivetrain is good. There are other benefits too.
 
+**Benefits of 6 motors**
+
 * Other teams' robots are less able to push the robot around, which helps in offensive/defensive situations like putting a stake in the positive corner.
 
-* The motors will generally heat up less. As long as the acceleration is limited to a reasonable amount, the motors will not overheat every single time we compete. After all, power consumption is proportional to torque, not to angular velocity. This means that running at full speed, a motor can use as little as 1 watt.
+* The motors will generally heat up less. As long as the acceleration is limited to a reasonable amount, the motors will not overheat every single time we compete. After all, power consumption is proportional to torque, not to angular velocity. The load is distributed over more motors, so it allows less time between rounds.
+
+* One can make the robot faster without sacrificing too much acceleration. Acceleration, as we realized, should be sacrificed anyway.
 
 * 
+
 ### CAD
 
 ## Programming
 
-### Choice of architecture
+### Mistakes made
 
-### Concepts learned
-
-### Algorithms learned
-
-### Implementation
+* **The robot was too fast**: This doesn't sound like a problem, but because of the subsystem, the weight was extremely unbalanced on the robot. Whenever it would accelerate, it would tilt up, which would cause to lose grip and get stuck on donuts all the time. 
