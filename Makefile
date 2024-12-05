@@ -7,12 +7,11 @@ clean:
 
 build/notebook.pdf: media/titlepage.pdf build/content.pdf
 	pdfunite $^ $@
+	echo "Sections which need to be completed:"
+	grep "{{TODO}}" -B 5 -A 5 -n notebook.md
 
 build/content.pdf: build/pp.md media/*
-	pandoc -t pdf $< -o $@ \
-	--template eisvogel \
-	--number-sections \
-	--eol=native
+	pandoc -t pdf $< -o $@ --template eisvogel --number-sections
 
 build/pp.md: notebook.md
 	sed "s/{{DATE}}/$(shell date '+%a, %B %d, %Y')/" $^ > $@
