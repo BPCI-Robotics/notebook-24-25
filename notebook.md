@@ -21,7 +21,7 @@ We will now walk you through the various robots and designs that we have worked 
 # Allen
 Allen was the first robot we ever brought to a competition, and he served us well. He is named for our mascot Allen, who is the monkey responsible for bringing Allen wrenches to the team members. It was a very simple robot which had gone through many designs, as we were learning a lot about VEX parts. We did not go through any tutorials, we simply learned by doing.
 
-\includegraphics[width=1.0\textwidth]{media/allen_1.jpg}
+{{allen_1.jpg|1.0}}
 
 ## Design
 
@@ -92,7 +92,7 @@ Ultimately this design was never used for anything. But we took away these point
 ### Donut picker-upper
 This design was possibly the most iterated throughout the project, as this would determine whether the robot could even do anything. The design is based around a chain which goes from the front of the robot to the top of it at the back, where the stake is attached.
 
-\includegraphics[width=0.8\textwidth]{media/triangle_grabbing_donut.jpg}
+{{triangle_grabbing_donut.jpg|0.8}}
 
 #### Hook design
 First we started with making hooks out of metal. We tried small ones, long ones, wide ones, using the claw from the old version of the clawbot, those weird plus pieces. None of them worked consistency and it all felt like it was in vain. Either they would get stuck on the stake, or not even pick up a donut. It wasn't useless though. Now we know with reasonable confidence that metal hooks don't work, at least not the ones we tried.
@@ -109,7 +109,7 @@ The reason that we used iron in the past is because we were concerned that alumi
 
 * **Strength is more determined by geometry.**
     
-  \includegraphics[width=1.0\textwidth]{media/metal_cross_sections.png}
+  {{metal_cross_sections.png|1.0}}
 
   As you can see in this graphic, the shape of the metal beam (whether C, U, L, or straight) is the main factor which determines how strong the metal is. This is intuitively true, and these are sorted by which ones feel like they would be stronger. 
 
@@ -140,8 +140,8 @@ After this, we switched to a different design. Now the robot pushes down the sta
 ### Intake mechanism
 When trying to pick up the robot, the problem always was that the hook would push the donut away before picking it up. We decided that the solution to this was a roller which forces the donut towards the robot.
 
-\includegraphics[width=0.5\textwidth]{media/roller_mechanism_gearing.jpg}
-\includegraphics[width=0.5\textwidth]{media/roller_mechanism_with_donut.jpg}
+{{roller_mechanism_gearing.jpg|0.5}}
+{{roller_mechanism_with_donut.jpg|0.5}}
 
 The interesting thing here is that the roller is powered by the same motor as the donut picker-upper. It goes through some gears to step up the speed and through a chain to get it into the right place. We wanted to maintain flexibility in our motor allocation, which is specifically the reason why we chose a four motor drivetrain and a pneumatic stake grabber. We still have three motors left to do whatever we need, like the elevation.
 
@@ -169,8 +169,7 @@ $L\left(x\right)=\frac{M}{1+e^{-k\left(x-a\right)}}$.
 
 Given the values $M = 100$, $k = 0.15$, and $a = 50$, we get this graph:
 
-<!-- Using LaTeX here as a hack because otherwise it won't scale properly. What the sigma? -->
-\includegraphics[width=0.8\textwidth]{media/logistic_curve_usual.png}
+{{logistic_curve_usual.png|0.8}}
 
 There are a few modifications to make. For one, this only works for positive controller values. When moving the joystick backwards, the expected behavior is for the robot to go backwards. So, we can mirror the curve for negative values to replicate this behavior with negative numbers. Also, there is a certain range where the motor produces the most power, around 63%. This is the fastest speed it can go while still using full torque. See the [Motor curve section](#motor-curve).
 
@@ -220,7 +219,7 @@ It is still very sensitive after this. Turning it completely right would otherwi
 
 Here's what the controller curve looks like:
 
-\includegraphics[width=0.8\textwidth]{media/controller_curve.png}
+{{controller_curve.png|0.8}}
 
 ### Drivetrain from scratch implementation
 `Aseer`
@@ -298,11 +297,11 @@ Barron was designed to be a sort of opposite to Allen. Allen is heavy and has a 
 ### Elevation system
 We used Barron to test the elevation systems that would eventually be used on Allen, as Allen was broken at the time.
 
-\includegraphics[width=0.8\textwidth]{media/elevation_design_side_view.jpg}
+{{elevation_design_side_view.jpg|0.8}}
 
 This is the first design we used for the elevation system, not including using the clawbot claw for this.
 
-\includegraphics[width=1.0\textwidth]{media/elevation_mechanism_close_up.png}
+{{elevation_mechanism_close_up.png|0.8}}
 
 This design uses a metal beam on a rail. It is tensioned into the open position by a rubber band which is pulling the head of one part to the tail of another part. The winch system pulls the ends together against the rubber band. To use it, the tension on the mechanism is released by the motor, allowing it to extend and reach the second rung of the ladder. The motor is turned around, pulling the parts together and pulling the robot up. The motor itself is geared for torque, along with being a red motor.
 
@@ -337,7 +336,7 @@ This way, anything that is different about the robots is stored in the configura
 ## Motor curve
 One interesting discovery is the curve which regulates the speed of motors.
 
-\includegraphics[width=1.0\textwidth]{media/vex_smart_motor_curve.png}
+{{vex_smart_motor_curve.png|1.0}}
 
 This is not intuitive at all unless one is looking for it. It's also not the solution one may expect. It is easy to program around it, though. When the speed is below a certain amount, set it to exactly whatever the magic number is (around 63) where the motor uses the most power. When it goes above that, switch to whatever speed the controller is set to. This allows you to use maximum torque, and therefore acceleration, for most of the velocity curve of the robot, while still being able to reach maximum speed.
 
@@ -355,7 +354,7 @@ else:
 
 This was a side project which turned out to be pretty useful for deciding on drivetrains. There is a lot you can calculate about a drivetrain just based on its gear and motor configuration. However, doing all the calculations by hand is pretty tedious and time consuming. What tool is good for doing a series of calculations and presenting it in a nice graphical format? A spreadsheet.
 
-\includegraphics[width=1.0\textwidth]{media/calculator_screenshot.png}
+{{calculator_screenshot.png|1.0}}
 
 > Note: This spreadsheet does not account for friction, and for certain drivetrains may be broken (values are negative). It also sometimes gives ridiculous results as it does not account for startup friction. I also don't know how to verify this tool.
 
@@ -499,17 +498,17 @@ You may ask, why are we working on the elevation system if we are not going to a
 
 Here are some pictures:
 
-\includegraphics[width=0.5\textwidth]{media/elevation_system_bottom.jpg}
-\includegraphics[width=0.5\textwidth]{media/elevation_system_middle.jpg}
+{{elevation_system_bottom.jpg|0.5}}
+{{elevation_system_middle.jpg|0.5}}
 
-\includegraphics[width=0.5\textwidth]{media/elevation_system.jpg}
-\includegraphics[width=0.5\textwidth]{media/elevation_system_latch.jpg}
+{{elevation_system.jpg|0.5}}
+{{elevation_system_latch.jpg|0.5}}
 
 One big limitation of the elevation is that, of course, it gets jammed. Part of this is because we do not have access to the usual pieces used for linear movement, like perhaps a rack-and-pinion system. Or at least a piece to make the pieces slide smoothly. It's all metal against metal. With that being said, it works.
 
 ### Code cleanup
 
-\includegraphics[width=0.8\textwidth]{media/commit_history.png}
+{{commit_history.png|0.8}}
 
 Without changing the code, we managed to remove a bunch of lines while also making the code clearer. This involved removing commented out code, removing global variables, and rescoping variables. The kill switch system was removed, as well as the ability to switch between two robots. This cleanup reduced the lines of code from 260 to 180.
 
@@ -535,7 +534,7 @@ The autonomous period is simple. All it does is move backwards to capture a stak
 ### Intake bar
 The intake bar was changed for a thicker one, as the donuts would end up bending the thinner one.
 
-\includegraphics[width=0.5\textwidth]{media/latest_intake_bar.jpg}
+{{latest_intake_bar.jpg|0.5}}
 
 ## Fri, November 22
 
@@ -625,7 +624,7 @@ We later realized why this is the case:
 
 Because of the subsystem, the weight was extremely unbalanced on the robot. Whenever it would accelerate, it would tilt up, which would cause to lose grip and get stuck on donuts all the time.
 
-  \includegraphics[width=1.0\textwidth]{media/robot_tip_over.png}
+  {{robot_tip_over.png|1.0}}
 
   In this picture, you can see the dynamics of the robot as it tried to pick up a stake in autonomous, or even in driver control. Keep in mind that forces which oppose each other in different areas will create a torque, even if they add to zero. 
   
@@ -667,7 +666,7 @@ This was a pretty big debate, and one that we have had before. Obviously, having
 
 * One can make the robot faster without sacrificing too much acceleration. Acceleration, as we realized, should be sacrificed anyway.
 
-* 
+* {{TODO}}
 
 ### CAD
 
