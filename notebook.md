@@ -639,8 +639,7 @@ Because of the subsystem, the weight was extremely unbalanced on the robot. When
 
 - This also means that the robot would tip while accelerating too quickly.
 
-  
-  \includegraphics[width=1.0\textwidth]{media/robot_wheel_tipping.png}
+  {{robot_wheel_tipping.png|1.0}}
 
 
 ## Action plan
