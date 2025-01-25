@@ -648,28 +648,23 @@ The items were:
 
 * {{TODO}}
 
-# Hawk 1A
-Hawk 1A is a robot on an aluminium drivetrain. It has four 600 RPM motors and is geared down to a speed of 360 RPM on 3.25" wheels.
+# Eye of Rah
+Eye of Rah is a robot on an aluminium drivetrain. It has six 600 RPM motors and is geared down to a speed of 360 RPM on 3.25" wheels. We are building this robot for the February qualifiers. We want it the best we can, of course, but we are always limited on time, so we are not being as ambitious as we would usually be.
 
-Hawk 1A's drivetrain is more traditional, valuing speed over torque, as VEX motors have a pretty high torque anyway.
+We want to make this the robot which shows how much we learned. Our previous robots were really simple, but now that we have access to more advanced parts, we hope to build a more advanced and capable robot.
 
 ## Design process
 
 ### Four motors vs. six motors
-This was a pretty big debate, and one that we have had before. Obviously, having 1.5x more torque on the drivetrain is good. There are other benefits too.
+There was always resistance against having six motors on the robot, with the main argument being that we would only have two motor slots left for subsystems. At the time, we did not really have pneumatics, and we didn't have 5.5 W half motors. Our final decision was to use six motors on the drivetrain. Here's why:
 
-**Benefits of 6 motors**
+* Less likely to overheat: When there are six motors, the load is spread across them, and each one has to give less torque overall.
 
-* Other teams' robots are less able to push the robot around, which helps in offensive/defensive situations like putting a stake in the positive corner.
-
-* The motors will generally heat up less. As long as the acceleration is limited to a reasonable amount, the motors will not overheat every single time we compete. After all, power consumption is proportional to torque, not to angular velocity. The load is distributed over more motors, so it allows less time between rounds.
-
-* One can make the robot faster without sacrificing too much acceleration. Acceleration, as we realized, should be sacrificed anyway.
-
-* {{TODO}}
+* Everyone else uses it: The torque afforded by six motors allows one to have a much faster drivetrain, while still having good acceleration, handling, and pushing power. 
 
 ### CAD
 
 ## Programming
 
-### Mistakes made
+### LemLib
+The programmers on the team did some research on control systems for the robot, and now we understand them. It would be a good project to implement them, but we understand our constraints (small team, few hours). So we wanted a sort of all-in-one solution for PID and path-following. PROS seemingly insists upon OkapiLib, though in the latest versions of PROS it is not supported. LemLib looked promising, as it was feature-rich and supported. LemLib makes it trivial to configure PID and controller
