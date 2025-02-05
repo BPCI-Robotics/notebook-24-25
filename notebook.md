@@ -346,7 +346,7 @@ There was always resistance against having six motors on the robot, with the mai
 * Everyone else uses it: The torque afforded by six motors allows one to have a much faster drivetrain, while still having good acceleration, handling, and pushing power. 
 
 ### CAD
-This time, we decided that CAD was important. So we tried two different softwares, Autodesk Fusion 360, and Onshape. Both of them proved useful in their own way. Fusion 360 is very powerful, with features like physics simulation, and better support for custom desigining parts like the ones made from polypropylene. However, it is demanding in terms of computer resources, and it does not run well on school-administered Chromebooks. Onshape has the essential features needed to put together a robot 
+This time, we decided that CAD was important. So we tried two different softwares, Autodesk Fusion 360, and Onshape. Both of them proved useful in their own way. Fusion 360 is very powerful, with features like physics simulation, and better support for custom desigining parts like the ones made from polypropylene. However, it is demanding in terms of computer resources, and it does not run well on school-administered Chromebooks. Onshape has the essential features needed to put together a robot, runs well on all computers, and is easier to learn. When desigining the robot for the competition, we decided that we do not have time for CAD
 
 ## Programming
 
