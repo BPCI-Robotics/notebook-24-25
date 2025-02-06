@@ -18,9 +18,11 @@ Hello! We are the VEX robotics team at Birchmount Park Collegiate Institute in S
 
 We will now walk you through the various robots and designs that we have worked on in the past, and what we learned from them. Everything we learned from our previous designs would enable us to create better and better robots, eventually culminating in the robot we brought to this competition.
 
-# Mathematical techniques
+# November Competition
 
-## Motor curve
+## Mathematical techniques
+
+### Motor curve
 One interesting discovery is the curve which regulates the speed of motors.
 
 {{vex_smart_motor_curve.png|1.0}}
@@ -36,7 +38,7 @@ else:
     return sgn * max(logistic(val), 100)
 ```
 
-## Drivetrain calculator spreadsheet
+### Drivetrain calculator spreadsheet
 `Aseer`
 
 This was a side project which turned out to be pretty useful for deciding on drivetrains. There is a lot you can calculate about a drivetrain just based on its gear and motor configuration. However, doing all the calculations by hand is pretty tedious and time consuming. What tool is good for doing a series of calculations and presenting it in a nice graphical format? A spreadsheet.
@@ -47,7 +49,7 @@ This was a side project which turned out to be pretty useful for deciding on dri
 
 When we are deciding which gear ratio to use, this tool can be really useful.
 
-## Elevation calculations
+### Elevation calculations
 It turns out that it's not that complicated to calculate how much power you need for elevation. You can use normal kinematics, or you could just reframe the problem as "how much energy do I need?" Since we are lifting the robot off the ground, we can use the formula for gravitational potential energy:
 
 $E_p = mgh$
@@ -85,11 +87,11 @@ And there it is, the magic formula. If you give $P$ as 11 watts, $d$ as the diam
 
 There is a caveat, though. This does not apply to our system because the rubber band pulls on the winch as well. So a 2x factor is used (half the RPM) is used. Any way to achieve a specific RPM will give the correct torque as long as the motor is running at full torque.
 
-# Pre-competition log
+## Pre-competition log
 
-## Mon, November 11
+### Mon, November 11
 
-### Problems and questions
+**Problems and questions**
 
 * How are we going to make it so that the elevation system isn't under so much tension? Tension causing:
   * Motor strain.
@@ -113,7 +115,7 @@ There is a caveat, though. This does not apply to our system because the rubber 
 
 * Can we climb higher on the ladder?
 
-### What we did
+**What we did**
 
 * We decided to make a Google Forms to allow us to scout other teams in a consistent manner, logging:
 
@@ -128,25 +130,25 @@ There is a caveat, though. This does not apply to our system because the rubber 
 
 ### Tue, November 12
 
-### What we did
+**What we did**
 `Aseer`
 
 I decided to test the autonomous capabilities of the robot. I decided to add a drivetrain to the code, making measurements. We do not have a gyro or anything fancy, so it was up to the encoders inside the motors and the VEX standard library to do calculations.
 
-## Thu, November 14
+### Thu, November 14
 
-### What we did
+**What we did**
 This was the first day that we mostly devoted to letting the drivers practice on the field. We had assigned drivers by this point. Before we didn't see the point in assigning separate responsibilities for drivers and builders, but now we understand that this can increase efficiency. Especially considering that robotics has many members, some of them don't have anything to do.
 
-### Problems encountered
+**Problems encountered**
 Actually, the drive test went surprisingly well, but there was one glaring issue, which [reminded us of an earlier issue](#stuck-on-a-triball). The robot could drive onto a donut and get stuck. We didn't address this immediately, as the drivers were still getting used to the controls. The controls also didn't need much adjustment.
 
-## Mon, November 18
+### Mon, November 18
 
-### What we did
+**What we did**
 At this point, we wanted to lock in the design before the competition, as any breaking changes could lead to having an incomplete non-functional robot before the competition. So we resisted most changes. Current projects would have to run independently from the competition robot, such as the elevation system and a complex sensing autonomous system. For autonomous we settled on just using a simple blind "go forward and do this" autonomous system. We did not see complex autonomous systems anyway, so this made sense.
 
-### PROS
+**PROS**
 Someone suggested using OkapiLib to program the robot. This would be considered a breaking change and a time consuming one, so like other projects, it was delayed until after the competition. This is because we would need to port our code to C/C++, which wouldn't be difficult but there are two programmers on the team, only one of them knows C. However, this would be very beneficial. This is because:
 
 * Micropython is very limiting: it lacks not only syntactical sugar like f-strings but also the ability to import other files as modules. This makes it easy to get lost in the long single-file codebase and its global variables. It also does not come with every Python standard module, not just the obvious ones like `os`.
@@ -155,19 +157,19 @@ Someone suggested using OkapiLib to program the robot. This would be considered 
 
 * OkapiLib provides many facilities to make it easier to code the autonomous period. This will definitely help us to win autonomous points in future competitions.
 
-### Problems encountered
+**Problems encountered**
 The robot still gets stuck on donuts. We also just have a lack of special things about the robot. It does not have an autonomous system and it does not have an elevation system. We don't have time for this as the day comes closer.
 
-## Tue, November 19
+### Tue, November 19
 
-### What we did
+**What we did**
 We finally fixed the issue where the robot would get stuck on a donut. This just involved adjusting the motors a little bit.
 
 We also continued work on the elevation system. The new design involves three sections which nicely fold into each other.
 
-## Thu, November 21
+### Thu, November 21
 
-### What we did
+**What we did**
 Today, we started packing up everything and making final changes. Work is still being done to improve the reliability of the elevation system, and to make sure that it fits within the size constraint.
 
 Today:
@@ -177,7 +179,7 @@ Today:
 - The elevation system was improved such that it caught on itself less often.
 - The code was heavily cleaned up.
 
-### Elevation system
+**Elevation system**
 
 The issue encountered with the elevation system is that it would fit within the size limit when the motor is active, but expands a little bit when the motor is turned off. The system hardly fits within the size limit anyway. Some tweaks must be made to the design to allow it to fit.
 
@@ -193,7 +195,7 @@ Here are some pictures:
 
 One big limitation of the elevation is that, of course, it gets jammed. Part of this is because we do not have access to the usual pieces used for linear movement, like perhaps a rack-and-pinion system. Or at least a piece to make the pieces slide smoothly. It's all metal against metal. With that being said, it works.
 
-### Code cleanup
+**Code cleanup**
 
 {{commit_history.png|0.8}}
 
@@ -215,17 +217,17 @@ void opcontrol() {
 }
 ```
 
-### Autonomous
+**Autonomous**
 The autonomous period is simple. All it does is move backwards to capture a stake, then puts the preloaded donut on it. Tomorrow, we will try to make the autonomous system pick up the field donuts. This will also be useful in the autonomous skills challenges.
 
-### Intake bar
+**Intake bar**
 The intake bar was changed for a thicker one, as the donuts would end up bending the thinner one.
 
 {{latest_intake_bar.jpg|0.5}}
 
-## Fri, November 22
+### Fri, November 22
 
-### What we did
+**What we did**
 Today was the last day before the competition.
 
 - We finalized packing up and loaded everything into the teacher's car.
@@ -233,7 +235,7 @@ Today was the last day before the competition.
 - We did not do much driver practice today, as autonomous was a priority. The autonomous system is immature as we just made it yesterday.
 - We indexed everything that we would be carrying to make sure that we could not forget everything.
 
-## Thoughts
+**Thoughts**
 
 ### Plans for the future
 Due to the time pressure, there were a lot of things that we decided not to do. Things that we decided to tackle later. 
@@ -269,19 +271,19 @@ Due to the time pressure, there were a lot of things that we decided not to do. 
 
 There is a lot to get done, and it's not like we finished everything today. Today was just the beginning, the day we became a proper VEX Robotics team. We should take a break, though, as these past two weeks have been tough.
 
-# After the competition
+## After the competition
 
-## Mistakes made
+### Mistakes made
 Many mistakes were made during the competition, and our potential was not truly realized. In terms of ranking, we did about as well as we did last time. That is to say, not well. We tested our robot, though, and it worked really well, so what went so wrong?
 
-### Height limit
+**Height limit**
 When one is forced to change the robot in such a way that it compromises the whole strategy, it is hard to recover from that. It's weird that that happened to us twice. In the first competition it was because our pneumatics tank failed, this time it was because we were slightly over the height limit.
 
 A lot of time was spent just adjusting the donut subsystem for that very specific height. We thought it wouldn't be a problem that it was half an inch over the limit, but they did not allow the robot. So we had no choice but to change it.
 
 Of course to make sure that it works, it takes a lot of tuning. Now we have a donut elevator that is very unlikely to work. And it did not work. This was the main reason we were not successful.
 
-### Practice was inaccurate
+**Practice was inaccurate**
 Of course we did a lot of driver practice this time, we would not make that mistake again. There were two problems with this, though. We changed our subsystem at the beginning of the competition, which seemed to completely change the dynamics of the robot. The practice also did not consider what the field conditions were like. In our practice, we:
 
 * Took our time to pick up a stake.
@@ -299,14 +301,14 @@ And we never picked up a donut. This is because our robot was not even capable o
 
 There is no way to win otherwise, since your stake will be moved to the minus corner, or the other team capitalizes on the double points. Another observation was the importance of wall stakes, which we did not even think about. Mostly because we didn't have that many pneumatic parts. It seems that wall stakes are important, because they can be a tie breaker when all the teams have already put the stakes in the corners. Stakes which are very hard to move out of the corners.
 
-### Autonomous never worked
+**Autonomous never worked**
 When trying the autonomous system, it seemed to work just fine, but on the field, it did not catch the stake even once. It would attempt to catch the stake, but fail to hold on to it.
 
 The only time the robot actually scored in autonomous was when it captured the stake, picked up a single donut, and put it on. It actually dropped the preload donut because the code was wrong, and turned on the lift before picking the stake.
 
 We later realized why this is the case:
 
-### The robot was too fast
+**The robot was too fast**
 - The unbalanced drivetrain meant that when decelerating quickly, the robot would tip, making it fail to catch the stake.
 
 Because of the subsystem, the weight was extremely unbalanced on the robot. Whenever it would accelerate, it would tilt up, which would cause to lose grip and get stuck on donuts all the time.
@@ -328,10 +330,12 @@ Because of the subsystem, the weight was extremely unbalanced on the robot. When
   {{robot_wheel_tipping.png|1.0}}
 
 
-## Action plan
+**Action plan**
 From what we learned from the competition, we formulated an action plan for how we would improve the robot. Actually, we would rebuild the entire robot from scratch, as we are going to replace our drivetrain motors. The design seemed fundamentally flawed anyway, so rebuilding from scratch would allow us to fully realize our vision for a competitive robot. This would be the one that brings us from being a lower-mid team to a higher-mid, nearly good team.
 
-# Eye of Rah
+# Feb Competition
+
+## Eye of Rah
 Eye of Rah is a robot on an aluminium drivetrain. It has six 600 RPM motors and is geared down to a speed of 360 RPM on 3.25" wheels. We are building this robot for the February qualifiers. We want it the best we can, of course, but we are always limited on time, so we are not being as ambitious as we would usually be.
 
 We want to make this the robot which shows how much we learned. Our previous robots were really simple, but now that we have access to more advanced parts, we hope to build a more advanced and capable robot.
@@ -346,11 +350,17 @@ There was always resistance against having six motors on the robot, with the mai
 * Everyone else uses it: The torque afforded by six motors allows one to have a much faster drivetrain, while still having good acceleration, handling, and pushing power. 
 
 ### CAD
-This time, we decided that CAD was important. So we tried two different softwares, Autodesk Fusion 360, and Onshape. Both of them proved useful in their own way. Fusion 360 is very powerful, with features like physics simulation, and better support for custom desigining parts like the ones made from polypropylene. However, it is demanding in terms of computer resources, and it does not run well on school-administered Chromebooks. Onshape has the essential features needed to put together a robot, runs well on all computers, and is easier to learn. When desigining the robot for the competition, we decided that we do not have time for CAD
+This time, we decided that CAD was important. So we tried two different softwares, Autodesk Fusion 360, and Onshape. Both of them proved useful in their own way. Fusion 360 is very powerful, with features like physics simulation, and better support for custom desigining parts like the ones made from polypropylene. However, it is demanding in terms of computer resources, and it does not run well on school-administered Chromebooks. Onshape has the essential features needed to put together a robot, runs well on all computers, and is easier to learn. When desigining the robot for the competition, we decided that we do not have time for CAD, and we would continue our iterative design process using the robot itself.
 
 ## Programming
 
-##
-
 ### LemLib
 The programmers on the team did some research on control systems for the robot, and now we understand them. It would be a good project to implement them, but we understand our constraints (small team, few hours). So we wanted a sort of all-in-one solution for PID and path-following. PROS seemingly insists upon OkapiLib, though in the latest versions of PROS it is not supported. LemLib looked promising, as it was feature-rich and supported. LemLib makes it trivial to configure PID and custom controller 
+
+## Feb 2 Competition
+On February 2nd, we went to a city qualifier, where our alliance placed second, only getting defeated in the final match. We also placed second in skills. What factors led to this success, and what can we learn from this?
+
+### The robot worked!
+The primary method of scoring in this competition is to put rings on the stake which the robot is holding, then to get it in the positive corner. The secondary method is to score on wall stakes, which is a sort of tiebreaker when both positive corners have full stakes. But weirdly, in most cases we won because of the autonomous bonus. With a few small changes to the autonomous code we used last competition, every single time it would pick up the stake, and score a single ring. The other teams didn't have an autonomous routine, so this gave a huge advantage, not just in autonomous win points, but also in having a stake before the game starts.
+
+I believe that if we wrote the autonomous code from 
