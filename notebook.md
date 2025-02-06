@@ -16,6 +16,17 @@ header-includes:
 # About us
 Hello! We are the VEX robotics team at Birchmount Park Collegiate Institute in Scarborough, ON. We have been active for about two years. In that time, we learned a lot as we worked together, failed, and triumphed. Our team is composed of exceptionally bright students who are either in the gifted program or might as well be in it. Our members have different strengths, and are really able to exercise their talents in the Robotics room.
 
+## Our members
+
+* **Aseer**: Programmer, Notebooker
+* **Colin**: Builder/Designer, Driver
+* **Daniel**: 
+* **Rohan**: Driver
+* **Turhan**: Programmer, Builder/Designer
+* **Tyler**: Builder/Designer
+* **Wesley**: Builder/Designer, Programmer
+
+
 We will now walk you through the various robots and designs that we have worked on in the past, and what we learned from them. Everything we learned from our previous designs would enable us to create better and better robots, eventually culminating in the robot we brought to this competition.
 
 # November Competition
@@ -348,6 +359,7 @@ Because of the subsystem, the weight was extremely unbalanced on the robot. When
 From what we learned from the competition, we formulated an action plan for how we would improve the robot. Actually, we would rebuild the entire robot from scratch, as we are going to replace our drivetrain motors. The design seemed fundamentally flawed anyway, so rebuilding from scratch would allow us to fully realize our vision for a competitive robot. This would be the one that brings us from being a lower-mid team to a higher-mid, nearly good team.
 
 # Feb Competition
+On February 2nd, we went to a city qualifier, where our alliance placed second, only getting defeated in the final match. We also placed second in skills. This was far more successful than we had ever been before. Our hard work paid off, and we realized that we learned something. What factors led to this success, and what can we learn from this?
 
 ## Eye of Rah
 Eye of Rah is a robot on an aluminium drivetrain. It has six 600 RPM motors and is geared down to a speed of 360 RPM on 3.25" wheels. We are building this robot for the February qualifiers. We want it the best we can, of course, but we are always limited on time, so we are not being as ambitious as we would usually be.
@@ -371,10 +383,10 @@ This time, we decided that CAD was important. So we tried two different software
 ### LemLib
 The programmers on the team did some research on control systems for the robot, and now we understand them. It would be a good project to implement them, but we understand our constraints (small team, few hours). So we wanted a sort of all-in-one solution for PID and path-following. PROS seemingly insists upon OkapiLib, though in the latest versions of PROS it is not supported. LemLib looked promising, as it was feature-rich and supported. LemLib makes it trivial to configure PID and custom controller 
 
-## Feb 2 Competition
-On February 2nd, we went to a city qualifier, where our alliance placed second, only getting defeated in the final match. We also placed second in skills. What factors led to this success, and what can we learn from this?
-
 ### The robot worked!
 The primary method of scoring in this competition is to put rings on the stake which the robot is holding, then to get it in the positive corner. The secondary method is to score on wall stakes, which is a sort of tiebreaker when both positive corners have full stakes. But weirdly, in most cases we won because of the autonomous bonus. With a few small changes to the autonomous code we used last competition, every single time it would pick up the stake, and score a single ring. The other teams didn't have an autonomous routine, so this gave a huge advantage, not just in autonomous win points, but also in having a stake before the game starts.
 
-I believe that if we wrote the autonomous code from 
+I believe that if we wrote the autonomous code from scratch, we wouldn't have had enough time to make it work as expected. Trying to grab a stake, then a donut is a difficult thing to do which requires some level of precision.
+
+### Python driving control system
+We still had the problem where our robot would often tip. This was for two reasons. It was a bit top heavy, as this was not a design consideration when we were building it. Another was that the six wheels were close to the centre of the robot. So of course it had room to tip. I (Aseer) proposed using PID
