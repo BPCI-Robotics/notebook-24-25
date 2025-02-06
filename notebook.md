@@ -131,6 +131,7 @@ There is a caveat, though. This does not apply to our system because the rubber 
 ### Tue, November 12
 
 **What we did**
+
 `Aseer`
 
 I decided to test the autonomous capabilities of the robot. I decided to add a drivetrain to the code, making measurements. We do not have a gyro or anything fancy, so it was up to the encoders inside the motors and the VEX standard library to do calculations.
@@ -138,17 +139,21 @@ I decided to test the autonomous capabilities of the robot. I decided to add a d
 ### Thu, November 14
 
 **What we did**
+
 This was the first day that we mostly devoted to letting the drivers practice on the field. We had assigned drivers by this point. Before we didn't see the point in assigning separate responsibilities for drivers and builders, but now we understand that this can increase efficiency. Especially considering that robotics has many members, some of them don't have anything to do.
 
 **Problems encountered**
-Actually, the drive test went surprisingly well, but there was one glaring issue, which [reminded us of an earlier issue](#stuck-on-a-triball). The robot could drive onto a donut and get stuck. We didn't address this immediately, as the drivers were still getting used to the controls. The controls also didn't need much adjustment.
+
+Actually, the drive test went surprisingly well, but there was one glaring issue, which reminded us of an earlier issue (we got stuck on a triball). The robot could drive onto a donut and get stuck. We didn't address this immediately, as the drivers were still getting used to the controls. The controls also didn't need much adjustment.
 
 ### Mon, November 18
 
 **What we did**
+
 At this point, we wanted to lock in the design before the competition, as any breaking changes could lead to having an incomplete non-functional robot before the competition. So we resisted most changes. Current projects would have to run independently from the competition robot, such as the elevation system and a complex sensing autonomous system. For autonomous we settled on just using a simple blind "go forward and do this" autonomous system. We did not see complex autonomous systems anyway, so this made sense.
 
 **PROS**
+
 Someone suggested using OkapiLib to program the robot. This would be considered a breaking change and a time consuming one, so like other projects, it was delayed until after the competition. This is because we would need to port our code to C/C++, which wouldn't be difficult but there are two programmers on the team, only one of them knows C. However, this would be very beneficial. This is because:
 
 * Micropython is very limiting: it lacks not only syntactical sugar like f-strings but also the ability to import other files as modules. This makes it easy to get lost in the long single-file codebase and its global variables. It also does not come with every Python standard module, not just the obvious ones like `os`.
@@ -158,11 +163,13 @@ Someone suggested using OkapiLib to program the robot. This would be considered 
 * OkapiLib provides many facilities to make it easier to code the autonomous period. This will definitely help us to win autonomous points in future competitions.
 
 **Problems encountered**
+
 The robot still gets stuck on donuts. We also just have a lack of special things about the robot. It does not have an autonomous system and it does not have an elevation system. We don't have time for this as the day comes closer.
 
 ### Tue, November 19
 
 **What we did**
+
 We finally fixed the issue where the robot would get stuck on a donut. This just involved adjusting the motors a little bit.
 
 We also continued work on the elevation system. The new design involves three sections which nicely fold into each other.
@@ -170,6 +177,7 @@ We also continued work on the elevation system. The new design involves three se
 ### Thu, November 21
 
 **What we did**
+
 Today, we started packing up everything and making final changes. Work is still being done to improve the reliability of the elevation system, and to make sure that it fits within the size constraint.
 
 Today:
@@ -218,9 +226,11 @@ void opcontrol() {
 ```
 
 **Autonomous**
+
 The autonomous period is simple. All it does is move backwards to capture a stake, then puts the preloaded donut on it. Tomorrow, we will try to make the autonomous system pick up the field donuts. This will also be useful in the autonomous skills challenges.
 
 **Intake bar**
+
 The intake bar was changed for a thicker one, as the donuts would end up bending the thinner one.
 
 {{latest_intake_bar.jpg|0.5}}
@@ -228,14 +238,13 @@ The intake bar was changed for a thicker one, as the donuts would end up bending
 ### Fri, November 22
 
 **What we did**
+
 Today was the last day before the competition.
 
 - We finalized packing up and loaded everything into the teacher's car.
 - We continued work on the autonomous system and the autonomous period.
 - We did not do much driver practice today, as autonomous was a priority. The autonomous system is immature as we just made it yesterday.
 - We indexed everything that we would be carrying to make sure that we could not forget everything.
-
-**Thoughts**
 
 ### Plans for the future
 Due to the time pressure, there were a lot of things that we decided not to do. Things that we decided to tackle later. 
@@ -277,6 +286,7 @@ There is a lot to get done, and it's not like we finished everything today. Toda
 Many mistakes were made during the competition, and our potential was not truly realized. In terms of ranking, we did about as well as we did last time. That is to say, not well. We tested our robot, though, and it worked really well, so what went so wrong?
 
 **Height limit**
+
 When one is forced to change the robot in such a way that it compromises the whole strategy, it is hard to recover from that. It's weird that that happened to us twice. In the first competition it was because our pneumatics tank failed, this time it was because we were slightly over the height limit.
 
 A lot of time was spent just adjusting the donut subsystem for that very specific height. We thought it wouldn't be a problem that it was half an inch over the limit, but they did not allow the robot. So we had no choice but to change it.
@@ -284,6 +294,7 @@ A lot of time was spent just adjusting the donut subsystem for that very specifi
 Of course to make sure that it works, it takes a lot of tuning. Now we have a donut elevator that is very unlikely to work. And it did not work. This was the main reason we were not successful.
 
 **Practice was inaccurate**
+
 Of course we did a lot of driver practice this time, we would not make that mistake again. There were two problems with this, though. We changed our subsystem at the beginning of the competition, which seemed to completely change the dynamics of the robot. The practice also did not consider what the field conditions were like. In our practice, we:
 
 * Took our time to pick up a stake.
@@ -302,6 +313,7 @@ And we never picked up a donut. This is because our robot was not even capable o
 There is no way to win otherwise, since your stake will be moved to the minus corner, or the other team capitalizes on the double points. Another observation was the importance of wall stakes, which we did not even think about. Mostly because we didn't have that many pneumatic parts. It seems that wall stakes are important, because they can be a tie breaker when all the teams have already put the stakes in the corners. Stakes which are very hard to move out of the corners.
 
 **Autonomous never worked**
+
 When trying the autonomous system, it seemed to work just fine, but on the field, it did not catch the stake even once. It would attempt to catch the stake, but fail to hold on to it.
 
 The only time the robot actually scored in autonomous was when it captured the stake, picked up a single donut, and put it on. It actually dropped the preload donut because the code was wrong, and turned on the lift before picking the stake.
@@ -309,6 +321,7 @@ The only time the robot actually scored in autonomous was when it captured the s
 We later realized why this is the case:
 
 **The robot was too fast**
+
 - The unbalanced drivetrain meant that when decelerating quickly, the robot would tip, making it fail to catch the stake.
 
 Because of the subsystem, the weight was extremely unbalanced on the robot. Whenever it would accelerate, it would tilt up, which would cause to lose grip and get stuck on donuts all the time.
@@ -331,6 +344,7 @@ Because of the subsystem, the weight was extremely unbalanced on the robot. When
 
 
 **Action plan**
+
 From what we learned from the competition, we formulated an action plan for how we would improve the robot. Actually, we would rebuild the entire robot from scratch, as we are going to replace our drivetrain motors. The design seemed fundamentally flawed anyway, so rebuilding from scratch would allow us to fully realize our vision for a competitive robot. This would be the one that brings us from being a lower-mid team to a higher-mid, nearly good team.
 
 # Feb Competition
