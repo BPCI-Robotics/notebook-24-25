@@ -389,4 +389,148 @@ The primary method of scoring in this competition is to put rings on the stake w
 I believe that if we wrote the autonomous code from scratch, we wouldn't have had enough time to make it work as expected. Trying to grab a stake, then a donut is a difficult thing to do which requires some level of precision.
 
 ### Python driving control system
-We still had the problem where our robot would often tip. This was for two reasons. It was a bit top heavy, as this was not a design consideration when we were building it. Another was that the six wheels were close to the centre of the robot. So of course it had room to tip. I (Aseer) proposed using PID
+We still had the problem where our robot would often tip. This was for two reasons. It was a bit top heavy, as this was not a design consideration when we were building it. Another was that the six wheels were close to the centre of the robot. So of course it had room to tip. I proposed using a PID (proportional-integral-derivative) controller to try and minimize the tipping when the driver moved the controller. Here's how I implemented it.
+
+```python
+class PID_Motor:
+    def __init__(self, P: float, I: float, D: float, getter: Callable[[], float], setter: Callable[[float], None]):
+        self.Kp = P
+        self.Ki = I
+        self.Kd = D
+
+        self.get_val = getter
+        self.set_val = setter
+
+        self.setpoint = 0
+
+        self.running = False
+
+    def __call__(self, setpoint: float):
+        if (not self.running):
+            self.start()
+        
+        self.setpoint = setpoint
+        t = brain.timer.time(SECONDS)
+    
+    def start(self):
+        self.running = True
+        Thread(self.loop)
+    
+    def stop(self):
+        self.running = False
+
+    def loop(self):
+        # Value of offset - when the error is equal zero
+        offset = 0
+        
+        time_prev = brain.timer.time(SECONDS)
+        e_prev = 0
+
+        Kp = self.Kp
+        Ki = self.Ki
+        Kd = self.Kd
+
+        I = 0
+
+        while self.running:
+            sleep(1 / 60, SECONDS)
+
+            time = brain.timer.time(SECONDS)
+
+            e = self.setpoint - self.get_val()
+                
+            P = Kp*e
+            I += Ki*e*(time - time_prev)
+            D = Kd*(e - e_prev)/(time - time_prev)
+
+            MV = offset + P + I + D
+
+            e_prev = e
+            time_prev = time
+            I *= 0.99
+
+            self.set_val(self.get_val() + MV)
+```
+
+This uses a class to abstract over the complex state of the PID system, and uses `__call__` to make it behave as if it were a regular motor-setting function. The reason why a class abstraction is used is to allow different PID controls for the drive and the turning. They are declared like so:
+
+```python
+set_turn_velocity_PID = PID_Motor(0.6, 0.2, 0.1, get_turn_velocity, drivetrain.set_turn_velocity)
+set_drive_velocity_PID = PID_Motor(0.6, 0.2, 0.1, drivetrain.velocity, drivetrain.set_drive_velocity)
+```
+
+And they are invoked like so:
+
+```python
+controller.axis1.changed(set_drive_velocity_PID, (controller.axis1.position(),))
+controller.axis3.changed(set_turn_velocity_PID, (controller.axis3.position(),))
+```
+
+Notice how this gets passed to `__call__` to change the setpoint.
+
+We had little time to access the robot while working on this, so how did we tune PID? By making a simulation of the motors, and tuning it based on that. From that, we could get some nice diagnostic data like this:
+
+```
+Waiting for velocity to be 100
+6.5 -> 100              [##                                      ]
+16.9 -> 100             [######                                  ]
+27.3 -> 100             [##########                              ]
+37.7 -> 100             [###############                         ]
+48.1 -> 100             [###################                     ]
+58.5 -> 100             [#######################                 ]
+68.9 -> 100             [###########################             ]
+79.3 -> 100             [###############################         ]
+88.4 -> 100             [###################################     ]
+98.8 -> 100             [####################################### ]
+101.6 -> 100            [########################################
+100.6 -> 100            [########################################]
+Set velocity to 100 which took:  0.8 seconds.
+Waiting for velocity to be 0
+84.4 -> 0               [#################################       ]
+64.4 -> 0               [#########################               ]
+44.4 -> 0               [#################                       ]
+24.4 -> 0               [#########                               ]
+4.4 -> 0                [#                                       ]
+2.1 -> 0                [                                        ]
+Set velocity to 0 which took:  0.4 seconds.
+Waiting for velocity to be 75
+8.7 -> 75               [###                                     ]
+19.1 -> 75              [#######                                 ]
+29.5 -> 75              [###########                             ]
+39.9 -> 75              [###############                         ]
+51.6 -> 75              [####################                    ]
+62.0 -> 75              [########################                ]
+71.1 -> 75              [############################            ]
+77.7 -> 75              [###############################         ]
+Set velocity to 75 which took:  0.57 seconds.
+Waiting for velocity to be -86
+69.1 -> -86             [###########################             ]
+49.1 -> -86             [###################                     ]
+29.1 -> -86             [###########                             ]
+9.1 -> -86              [###                                     ]
+-10.9 -> -86            [####                                    ]
+-30.9 -> -86            [############                            ]
+-50.9 -> -86            [####################                    ]
+-70.9 -> -86            [############################            ]
+-88.4 -> -86            [###################################     ]
+Set velocity to -86 which took:  0.64 seconds.
+Waiting for velocity to be 0
+-85.6 -> 0              [##################################      ]
+-79.0 -> 0              [###############################         ]
+-68.6 -> 0              [###########################             ]
+-58.2 -> 0              [#######################                 ]
+-47.8 -> 0              [###################                     ]
+-37.4 -> 0              [##############                          ]
+-27.0 -> 0              [##########                              ]
+-16.6 -> 0              [######                                  ]
+-6.2 -> 0               [##                                      ]
+Set velocity to 0 which took:  0.6 seconds.
+0.4 -> 0                [                                        ]
+1.9 -> 0                [                                        ]
+0.9 -> 0                [                                        ]
+-0.1 -> 0               [                                        ]
+-1.1 -> 0               [                                        ]
+```
+
+However, as I tuned PID, I realized that the behavior was not as I expected. I couldn't ever get the behavior I was looking for. We eventually decided that PID was too complex for our use case. Someone suggested using a rolling-average function instead. So I did just that.
+
