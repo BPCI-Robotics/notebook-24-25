@@ -540,3 +540,47 @@ Set velocity to 0 which took:  0.6 seconds.
 
 However, as I tuned PID, I realized that the behavior was not as I expected. I couldn't ever get the behavior I was looking for. We eventually decided that PID was too complex for our use case. Someone suggested using a rolling-average function instead. So I did just that.
 
+```python
+class RollingAverage:
+    def __init__(self, size, anti_lag):
+        self.size = size
+        self.anti_lag_enabled = anti_lag
+
+        self.data = [0.0] * self.size
+        self.pos = 0
+
+    
+    def __call__(self, val: float) -> float:
+
+        # Add to the buffer, with a dead zone from -5 to 5
+        self.data[self.pos] = 0 if -5 <= val <= 5 else val
+
+        # Iterate to the next position
+        self.pos = (self.pos + 1) % self.size
+        
+        ret = sum(self.data) / self.size
+        ret_sign = -1 if ret < 0 else 1
+        
+        # Anti lag makes any value above 40 equivalent to 100.
+        if abs(ret) > 50 and self.anti_lag_enabled:
+            return ret_sign * 100
+
+        return ret
+
+# ...
+
+control_accel = RollingAverage(size=2, anti_lag=True)
+control_turn = RollingAverage(size=2, anti_lag=False)
+
+def do_drive_loop() -> None:
+    accel_stick = control_accel(controller.axis3.position())
+    turn_stick = control_turn(controller.axis1.position())
+
+    lm.spin(FORWARD, accel_stick - turn_stick, PERCENT)
+    rm.spin(FORWARD, accel_stick + turn_stick, PERCENT)
+```
+
+The way this code works is that it creates a circular buffer of the inputs to the function. When the return value of the function is asked, it returns the mean value of the entire buffer. This makes it a very simple system for smoothing inputs. But there was a big problem with all this.
+
+### The tipping problem
+The reason why we were trying to control the driver input to the robot was because the robot kept tipping as it was driving. 
