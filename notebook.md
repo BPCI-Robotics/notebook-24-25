@@ -569,8 +569,8 @@ class RollingAverage:
 
 # ...
 
-control_accel = RollingAverage(size=2, anti_lag=True)
-control_turn = RollingAverage(size=2, anti_lag=False)
+control_accel = RollingAverage(size=10, anti_lag=True)
+control_turn = RollingAverage(size=10, anti_lag=False)
 
 def do_drive_loop() -> None:
     accel_stick = control_accel(controller.axis3.position())
@@ -583,4 +583,8 @@ def do_drive_loop() -> None:
 The way this code works is that it creates a circular buffer of the inputs to the function. When the return value of the function is asked, it returns the mean value of the entire buffer. This makes it a very simple system for smoothing inputs. But there was a big problem with all this.
 
 ### The tipping problem
-The reason why we were trying to control the driver input to the robot was because the robot kept tipping as it was driving. 
+The reason why we were trying to control the driver input to the robot was because the robot kept tipping as it was driving. But this was a misguided idea and turned out to be unhelpful. The reason for this is that there must be a strong correlation between controller input and the behavior of the robot, otherwise the driver has trouble making the connection. The robot->eye->brain->hand->controller->robot loop runs very tightly, and anything which loosens this makes the robot very difficult to control, manifesting as "input lag." In the rolling average function, I tried to mitigate this by making all velocities above 50 equivalent to 100, but this did not help.
+
+So what is the problem? The fact that the robot is able to tip at all. The primary problem is that the robot itself is unbalanced. This is not trivial to resolve, and would require a full rebuild, so we looked at another problem. The wheels are far away from the edge of the robot. So we fixed this by moving the wheels to the end of the robot, leaving a gap.
+
+{{diagram_drivebase_adjustment.png|1.0}}
