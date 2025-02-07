@@ -14,18 +14,20 @@ header-includes:
 ...
 
 # About us
-Hello! We are the VEX robotics team at Birchmount Park Collegiate Institute in Scarborough, ON. We have been active for about two years. In that time, we learned a lot as we worked together, failed, and triumphed. Our team is composed of exceptionally bright students who are either in the gifted program or might as well be in it. Our members have different strengths, and are really able to exercise their talents in the Robotics room.
+Hello! We are the VEX robotics team at Birchmount Park Collegiate Institute in Scarborough, ON. We have been active for about two years. In that time, we learned a lot as we worked together, failed, and triumphed. Our team is composed of exceptionally bright students who are either in the gifted program or might as well be in it. Our members have different strengths, and have the opportunity to express their talents in the robotics room.
 
-## Our members
+{{team_photo.png|1.0}}
 
-* **Aseer**: Programmer, Notebooker
+## Our members (left to right)
+
+* **Turhan**: Programmer, Builder
+* **Wesley**: Programmer, Builder
 * **Colin**: Builder/Designer, Driver
-* **Daniel**: 
 * **Rohan**: Driver
-* **Turhan**: Programmer, Builder/Designer
+* **Aseer**: Programmer, Notebooker
 * **Tyler**: Builder/Designer
-* **Wesley**: Builder/Designer, Programmer
-
+* **Wadid**: kinda just there
+* **Daniel**: Builder, Strategy/Scouting
 
 We will now walk you through the various robots and designs that we have worked on in the past, and what we learned from them. Everything we learned from our previous designs would enable us to create better and better robots, eventually culminating in the robot we brought to this competition.
 
@@ -335,7 +337,7 @@ We later realized why this is the case:
 
 - The unbalanced drivetrain meant that when decelerating quickly, the robot would tip, making it fail to catch the stake.
 
-Because of the subsystem, the weight was extremely unbalanced on the robot. Whenever it would accelerate, it would tilt up, which would cause to lose grip and get stuck on donuts all the time.
+Because of the subsystem, the weight was extremely unbalanced on the robot. Whenever it would accelerate, it would tilt up, which would cause it to lose grip and get stuck on donuts all the time.
 
   {{robot_tip_over.png|1.0}}
 
@@ -358,7 +360,7 @@ Because of the subsystem, the weight was extremely unbalanced on the robot. When
 
 From what we learned from the competition, we formulated an action plan for how we would improve the robot. Actually, we would rebuild the entire robot from scratch, as we are going to replace our drivetrain motors. The design seemed fundamentally flawed anyway, so rebuilding from scratch would allow us to fully realize our vision for a competitive robot. This would be the one that brings us from being a lower-mid team to a higher-mid, nearly good team.
 
-# Feb Competition
+# February Competition
 On February 2nd, we went to a city qualifier, where our alliance placed second, only getting defeated in the final match. We also placed second in skills. This was far more successful than we had ever been before. Our hard work paid off, and we realized that we learned something. What factors led to this success, and what can we learn from this?
 
 ## Eye of Rah
@@ -387,7 +389,10 @@ This time, we decided that CAD was important. So we tried two different software
 ## Programming
 
 ### LemLib
-The programmers on the team did some research on control systems for the robot, and now we understand them. It would be a good project to implement them, but we understand our constraints (small team, few hours). So we wanted a sort of all-in-one solution for PID and path-following. PROS seemingly insists upon OkapiLib, though in the latest versions of PROS it is not supported. LemLib looked promising, as it was feature-rich and supported. LemLib makes it trivial to configure PID and custom controller 
+The programmers on the team did some research on control systems for the robot, and now we understand them. It would be a good project to implement them, but we understand our constraints (small team, few hours). So we wanted a sort of all-in-one solution for PID and path-following. PROS seemingly insists upon OkapiLib, though in the latest versions of PROS it is not supported. LemLib looked promising, as it was feature-rich and supported. LemLib makes it trivial to configure PID, path-following algorithms, and driver control schemes. However...
+
+### Switch away from PROS
+We already had a {{TODO}}
 
 ### The robot worked!
 The primary method of scoring in this competition is to put rings on the stake which the robot is holding, then to get it in the positive corner. The secondary method is to score on wall stakes, which is a sort of tiebreaker when both positive corners have full stakes. But weirdly, in most cases we won because of the autonomous bonus. With a few small changes to the autonomous code we used last competition, every single time it would pick up the stake, and score a single ring. The other teams didn't have an autonomous routine, so this gave a huge advantage, not just in autonomous win points, but also in having a stake before the game starts.
@@ -474,8 +479,9 @@ controller.axis3.changed(set_turn_velocity_PID, (controller.axis3.position(),))
 
 Notice how this gets passed to `__call__` to change the setpoint.
 
-We had little time to access the robot while working on this, so how did we tune PID? By making a simulation of the motors, and tuning it based on that. From that, we could get some nice diagnostic data like this:
+We had little time to access the robot while working on this, so how did we tune PID? By making a simulation of the motors, and tuning it based on that. To simulate the robot drivetrain, there were a few parts. The main part was to implement inertia such that the motors don't instantly change speed. Another thing was to simulate the robot crashing, which can be done by forcing the velocity to be zero for a certain period of time. This is important for diagnosing integral windup, and seeing the behavior in unusual situations.
 
+Here is an example graph:
 ```
 Waiting for velocity to be 100
 6.5 -> 100              [##                                      ]
@@ -488,7 +494,7 @@ Waiting for velocity to be 100
 79.3 -> 100             [###############################         ]
 88.4 -> 100             [###################################     ]
 98.8 -> 100             [####################################### ]
-101.6 -> 100            [########################################
+101.6 -> 100            [########################################]
 100.6 -> 100            [########################################]
 Set velocity to 100 which took:  0.8 seconds.
 Waiting for velocity to be 0
@@ -499,43 +505,7 @@ Waiting for velocity to be 0
 4.4 -> 0                [#                                       ]
 2.1 -> 0                [                                        ]
 Set velocity to 0 which took:  0.4 seconds.
-Waiting for velocity to be 75
-8.7 -> 75               [###                                     ]
-19.1 -> 75              [#######                                 ]
-29.5 -> 75              [###########                             ]
-39.9 -> 75              [###############                         ]
-51.6 -> 75              [####################                    ]
-62.0 -> 75              [########################                ]
-71.1 -> 75              [############################            ]
-77.7 -> 75              [###############################         ]
-Set velocity to 75 which took:  0.57 seconds.
-Waiting for velocity to be -86
-69.1 -> -86             [###########################             ]
-49.1 -> -86             [###################                     ]
-29.1 -> -86             [###########                             ]
-9.1 -> -86              [###                                     ]
--10.9 -> -86            [####                                    ]
--30.9 -> -86            [############                            ]
--50.9 -> -86            [####################                    ]
--70.9 -> -86            [############################            ]
--88.4 -> -86            [###################################     ]
-Set velocity to -86 which took:  0.64 seconds.
-Waiting for velocity to be 0
--85.6 -> 0              [##################################      ]
--79.0 -> 0              [###############################         ]
--68.6 -> 0              [###########################             ]
--58.2 -> 0              [#######################                 ]
--47.8 -> 0              [###################                     ]
--37.4 -> 0              [##############                          ]
--27.0 -> 0              [##########                              ]
--16.6 -> 0              [######                                  ]
--6.2 -> 0               [##                                      ]
-Set velocity to 0 which took:  0.6 seconds.
-0.4 -> 0                [                                        ]
-1.9 -> 0                [                                        ]
-0.9 -> 0                [                                        ]
--0.1 -> 0               [                                        ]
--1.1 -> 0               [                                        ]
+...
 ```
 
 However, as I tuned PID, I realized that the behavior was not as I expected. I couldn't ever get the behavior I was looking for. We eventually decided that PID was too complex for our use case. Someone suggested using a rolling-average function instead. So I did just that.
@@ -588,3 +558,5 @@ The reason why we were trying to control the driver input to the robot was becau
 So what is the problem? The fact that the robot is able to tip at all. The primary problem is that the robot itself is unbalanced. This is not trivial to resolve, and would require a full rebuild, so we looked at another problem. The wheels are far away from the edge of the robot. So we fixed this by moving the wheels to the end of the robot, leaving a gap.
 
 {{diagram_drivebase_adjustment.png|1.0}}
+
+### Autonomous control
