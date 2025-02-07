@@ -377,14 +377,23 @@ There was always resistance against having six motors on the robot, with the mai
 
 * Everyone else uses it: The torque afforded by six motors allows one to have a much faster drivetrain, while still having good acceleration, handling, and pushing power.
 
+### Choice of metal
+We always thought that steel was better because it makes the robot heavier, therefore more difficult to push around, and it makes the robot stronger and more rigid. We quickly realized that the important thing is actually agility, and being able to perform tasks quickly. Sometimes the robot can get tangled with another robot, but this is balanced because it means that the two robots are both wasting time.
+
 ### Mogo Clamp
 Our mogo clamp utilizes 2 50mm bore pistons to clamp the piston and retain possession of the goal. However, one difference from other teams is that we do not have a lot of force pushing down on the stake. This comes with downsides, such as not being able to consistently clamp corners and being able to shift. However, this also allows us to use minimal air to grab a piston, allowing us to grab a full stake with just 20 psi. The shifting also was not bad enough to justify a full change of the system, especially considering the small time period until provincials.
 
-###
-
+Using two pistons seemed to allow the force to be spread more evenly through the system, as well as providing more force, of course.
 
 ### CAD
 This time, we decided that CAD was important. So we tried two different softwares, Autodesk Fusion 360, and Onshape. Both of them proved useful in their own way. Fusion 360 is very powerful, with features like physics simulation, and better support for custom desigining parts like the ones made from polypropylene. However, it is demanding in terms of computer resources, and it does not run well on school-administered Chromebooks. Onshape has the essential features needed to put together a robot, runs well on all computers, and is easier to learn. When desigining the robot for the competition, we decided that we do not have time for CAD, and we would continue our iterative design process using the robot itself.
+
+### Wall stake mechanism
+We wanted a mechanism for the wall stake, because in a few games, this can be a tiebreaker. When both positive corners are full with both teams' donuts, there are few options left to score. One particularly popular one was scoring on the wall stakes or alliance stakes. Many teams had a mechanism for doing so, and we went with the Lady Brown mechanism, because it seemed easier to implement.
+
+One problem that we encountered in testing was that the motor, which was set to `HOLD`, would overheat while holding the donut. This makes sense. If the motor is powered but isn't doing work, all of the energy is going into heating the coils inside the motor. We decided that we only really wanted to score one or two wall stake donuts, so this was not a problem. We also made it so that the motor is unpowered when in the resting position.
+
+But the main problem was that operating the mechanism took too long. The procedure to score the donut was convoluted, and the drivers did not have much time to practice. So in every game, it was more effective to simply pick up another stake and score some more donuts.
 
 ## Programming
 
@@ -403,64 +412,36 @@ I believe that if we wrote the autonomous code from scratch, we wouldn't have ha
 We still had the problem where our robot would often tip. This was for two reasons. It was a bit top heavy, as this was not a design consideration when we were building it. Another was that the six wheels were close to the centre of the robot. So of course it had room to tip. I proposed using a PID (proportional-integral-derivative) controller to try and minimize the tipping when the driver moved the controller. Here's how I implemented it.
 
 ```python
-class PID_Motor:
-    def __init__(self, P: float, I: float, D: float, getter: Callable[[], float], setter: Callable[[float], None]):
-        self.Kp = P
-        self.Ki = I
-        self.Kd = D
+# Value of offset - when the error is equal zero
+offset = 0
 
-        self.get_val = getter
-        self.set_val = setter
+time_prev = brain.timer.time(SECONDS)
+e_prev = 0
 
-        self.setpoint = 0
+Kp = self.Kp
+Ki = self.Ki
+Kd = self.Kd
 
-        self.running = False
+I = 0
 
-    def __call__(self, setpoint: float):
-        if (not self.running):
-            self.start()
+while self.running:
+    sleep(1 / 60, SECONDS)
+
+    time = brain.timer.time(SECONDS)
+
+    e = self.setpoint - self.get_val()
         
-        self.setpoint = setpoint
-        t = brain.timer.time(SECONDS)
-    
-    def start(self):
-        self.running = True
-        Thread(self.loop)
-    
-    def stop(self):
-        self.running = False
+    P = Kp*e
+    I += Ki*e*(time - time_prev)
+    D = Kd*(e - e_prev)/(time - time_prev)
 
-    def loop(self):
-        # Value of offset - when the error is equal zero
-        offset = 0
-        
-        time_prev = brain.timer.time(SECONDS)
-        e_prev = 0
+    MV = offset + P + I + D
 
-        Kp = self.Kp
-        Ki = self.Ki
-        Kd = self.Kd
+    e_prev = e
+    time_prev = time
+    I *= 0.99
 
-        I = 0
-
-        while self.running:
-            sleep(1 / 60, SECONDS)
-
-            time = brain.timer.time(SECONDS)
-
-            e = self.setpoint - self.get_val()
-                
-            P = Kp*e
-            I += Ki*e*(time - time_prev)
-            D = Kd*(e - e_prev)/(time - time_prev)
-
-            MV = offset + P + I + D
-
-            e_prev = e
-            time_prev = time
-            I *= 0.99
-
-            self.set_val(self.get_val() + MV)
+    self.set_val(self.get_val() + MV)
 ```
 
 This uses a class to abstract over the complex state of the PID system, and uses `__call__` to make it behave as if it were a regular motor-setting function. The reason why a class abstraction is used is to allow different PID controls for the drive and the turning. They are declared like so:
@@ -555,8 +536,14 @@ The way this code works is that it creates a circular buffer of the inputs to th
 ### The tipping problem
 The reason why we were trying to control the driver input to the robot was because the robot kept tipping as it was driving. But this was a misguided idea and turned out to be unhelpful. The reason for this is that there must be a strong correlation between controller input and the behavior of the robot, otherwise the driver has trouble making the connection. The robot->eye->brain->hand->controller->robot loop runs very tightly, and anything which loosens this makes the robot very difficult to control, manifesting as "input lag." In the rolling average function, I tried to mitigate this by making all velocities above 50 equivalent to 100, but this did not help.
 
-So what is the problem? The fact that the robot is able to tip at all. The primary problem is that the robot itself is unbalanced. This is not trivial to resolve, and would require a full rebuild, so we looked at another problem. The wheels are far away from the edge of the robot. So we fixed this by moving the wheels to the end of the robot, leaving a gap.
+So what is the problem? The fact that the robot is able to tip at all. The primary problem is that the robot itself is unbalanced. This is not trivial to resolve, and would require a full rebuild, so we looked at another problem. The wheels are far away from the edge of the robot. So we fixed this by moving the wheels to the end of the robot, leaving a gap between the wheels.
 
 {{diagram_drivebase_adjustment.png|1.0}}
 
 ### Autonomous control
+To control the autonomous period, we simply copied the code we used at the last competition, and made a few small changes. It is simply instructing the drivetrain to move certain distances and turn certain amounts. There are also wait statements to ensure that the robot stabilizes before doing anything. This makes the positions of the robot more predictable, making the autonomous overall more consistent. It was pretty consistent, and won us a few matches. We never did autonomous skills.
+
+## Strategy
+We never strictly strategized through the games, we simply did what we felt was right. The important thing to consider is that matches have very limited time, so time must be used wisely.
+
+So when we were in the audience, we would instruct the driver on what the best use of time was at the current moment. 
