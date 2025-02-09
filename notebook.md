@@ -26,10 +26,54 @@ Hello! We are the VEX robotics team at Birchmount Park Collegiate Institute in S
 * **Rohan**: Driver
 * **Aseer**: Programmer, Notebooker
 * **Tyler**: Builder/Designer
-* **Wadid**: kinda just there
+* **Wadid**: Outreach
 * **Daniel**: Builder, Strategy/Scouting
 
-We will now walk you through the various robots and designs that we have worked on in the past, and what we learned from them. Everything we learned from our previous designs would enable us to create better and better robots, eventually culminating in the robot we brought to this competition.
+This notebook will outline our design process as we worked on two robots for the VRC High Stakes competition. We went through a lot of design iterations, and worked as hard as we could in our limited time.
+
+# Previous Competitions
+
+## Lessons learned
+In November, we are going to compete in our first competition this season, and our third competition overall. The first two were for Over Under.
+
+Let's review what we learned from competing in Over Under:
+
+* Time management, especially on a school team, is very important.
+  * If it is too complex and hardly worth it, don't do it.
+  * If you are unsure whether it will work, and it takes a long time, don't do it.
+  * If you can't get something to work, scrap it.
+  * Spend most of your time working on the most important systems, like the drivebase and the scoring mechanism.
+  * Find work for people to do which doesn't involve the robot.
+
+* The Clawbot drivetrain is just not that good. Popular drivetrains:
+  * have six motors,
+  * six or more small wheels,
+  * a really high RPM (360 or higher),
+  * are bottom-heavy,
+  * and often use tank-drive,
+
+* On the other hand, the drivetrain we used had:
+  * four motors,
+  * four large wheels,
+  * 200 rpm,
+  * was unbalanced,
+  * and had independent wheels.
+
+* There are many extra pieces of equipment which are used often. These include:
+  * Color sensor,
+  * Accelerometer (IMU),
+  * Rotation encoders + tracking wheels,
+  * Extra pistons,
+  * Flex wheels and traction wheels,
+  * 5.5 watt motors,
+  * and high traction mats.
+
+* Some other tips include:
+  * There isn't a good reason to use anything but nylock nuts. Keps nuts and regular nuts fall off really easily.
+  * However, keps nuts can be quickly added and removed, and are good for prototyping.
+  * The pressure regulator can be used to reduce the air consumption of the pneumatics system.
+  * Driver practice is very important! It's not just something you do for a day after building!
+  * Third-party websites sell VEX-legal parts at good prices, or simply when they're hard to come across.
 
 # November Competition
 
