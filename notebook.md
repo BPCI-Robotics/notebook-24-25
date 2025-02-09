@@ -80,7 +80,8 @@ Let's review what we learned from competing in Over Under:
 ## Mathematical techniques
 
 ### Motor curve
-One interesting discovery is the curve which regulates the speed of motors.
+
+Today, I was looking at the documentation for those VEX Smart Motors. I realized something interesting.
 
 {{vex_smart_motor_curve.png|1.0}}
 
@@ -95,18 +96,20 @@ else:
     return sgn * max(logistic(val), 100)
 ```
 
-### Drivetrain calculator spreadsheet
-`Aseer`
+> Update: during the competition, this code was removed. When we were desperate to make the robot work, all of the non-essential code was removed. This code actually seemed problematic, since one of our problems was that our drivetrain tipped too much. More acceleration would not help.
 
-This was a side project which turned out to be pretty useful for deciding on drivetrains. There is a lot you can calculate about a drivetrain just based on its gear and motor configuration. However, doing all the calculations by hand is pretty tedious and time consuming. What tool is good for doing a series of calculations and presenting it in a nice graphical format? A spreadsheet.
+### Drivetrain calculator spreadsheet
+
+I had this idea for a while, and then yesterday I finally got around to it. I was showing a bunch of physics calculations on the chalkboard, and I thought "for every drivetrain, you have to do the exact same calculations." So why not automate this process with a spreadsheet. So I did exactly that.
 
 {{calculator_screenshot.png|1.0}}
 
-> Note: This spreadsheet does not account for friction, and for certain drivetrains may be broken (values are negative). It also sometimes gives ridiculous results as it does not account for startup friction. I also don't know how to verify this tool.
+> Note: This spreadsheet does not account for friction, and for certain drivetrains may be broken (values are negative). It also sometimes gives ridiculous results as it does not account for friction. We don't have any experimental evidence for this tool either. The values such as "time to cross the field" are fairy tales. The utility of them is to compare them relative to each other.
 
-When we are deciding which gear ratio to use, this tool can be really useful.
+When we are deciding which gear ratio to use, this tool can be really useful. However, it gives no intuition at all about how different drivetrains feel. We thought speeds such as 250 RPM on 4" were too fast, even though this is normal, even a bit slow.
 
 ### Elevation calculations
+
 It turns out that it's not that complicated to calculate how much power you need for elevation. You can use normal kinematics, or you could just reframe the problem as "how much energy do I need?" Since we are lifting the robot off the ground, we can use the formula for gravitational potential energy:
 
 $E_p = mgh$
@@ -598,4 +601,10 @@ We never strictly strategized through the games, we simply did what we felt was 
 So when we were in the audience, we would instruct the driver on what the best use of time was at the current moment.
 
 
-## {{TODO}} (After February Competition) or (Provincials)
+# After February Competion
+
+On February 2nd, we went to a city qualifier, where our alliance placed second, only getting defeated in the final match. We also placed second in skills. This was far more successful than we had ever been before. Our hard work paid off, and we realized that we learned something. What factors led to this success, where could we have improved, and what can we learn overall from this?
+
+## Mistakes made
+
+# Provincials
