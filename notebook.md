@@ -401,7 +401,9 @@ But the main problem was that operating the mechanism took too long. The procedu
 The programmers on the team did some research on control systems for the robot, and now we understand them. It would be a good project to implement them, but we understand our constraints (small team, few hours). So we wanted a sort of all-in-one solution for PID and path-following. PROS seemingly insists upon OkapiLib, though in the latest versions of PROS it is not supported. LemLib looked promising, as it was feature-rich and supported. LemLib makes it trivial to configure PID, path-following algorithms, and driver control schemes. However...
 
 ### Switch away from PROS
-We already had a {{TODO}}
+When we were working the PROS code, we encountered a problem where only half of the drivetrain would move, and we could not figure out the issue (though it was probably that the motors were incorrectly configured). At that point, we decided to scrap it, because we did not have any time to tune PID, and Python would be much simpler to work with. So I rewrote the Python codebase to clean it up a bit, and this was quite successful on the field.
+
+PID and pure pursuit are important for many autonomous systems, so why didn't we need it? It's because we gave a lot of time for the robot to complete its routine, which allowed it more accuracy, and prevented it from tipping so much. This means making the robot move slowly, as well as putting long wait statements between routines. The calls to `drivetrain.drive_for` were decided simply by trial and error. 
 
 ### The robot worked!
 The primary method of scoring in this competition is to put rings on the stake which the robot is holding, then to get it in the positive corner. The secondary method is to score on wall stakes, which is a sort of tiebreaker when both positive corners have full stakes. But weirdly, in most cases we won because of the autonomous bonus. With a few small changes to the autonomous code we used last competition, every single time it would pick up the stake, and score a single ring. The other teams didn't have an autonomous routine, so this gave a huge advantage, not just in autonomous win points, but also in having a stake before the game starts.
@@ -540,10 +542,16 @@ So what is the problem? The fact that the robot is able to tip at all. The prima
 
 {{diagram_drivebase_adjustment.png|1.0}}
 
+### Color sorting
+One strategy that many teams implemented was using a color sensor to detect what color the donuts were, and handle them accordingly. We also tried to do something like this, but we did not have a color sensor. So, instead, we used the color sensor. The color sensor can be imprecise, and it's not designed to work at short range. Nevertheless, it was better than nothing. The way it works is that it captures both the red signal and blue signal, figures out which one is present, and then measures the size of the donut. If the donut is not filling a substantial area of the sensor, it is probably on the field, rather than on the donut elevator. This worked, but there was no time to implement this.
+
 ### Autonomous control
 To control the autonomous period, we simply copied the code we used at the last competition, and made a few small changes. It is simply instructing the drivetrain to move certain distances and turn certain amounts. There are also wait statements to ensure that the robot stabilizes before doing anything. This makes the positions of the robot more predictable, making the autonomous overall more consistent. It was pretty consistent, and won us a few matches. We never did autonomous skills.
 
 ## Strategy
 We never strictly strategized through the games, we simply did what we felt was right. The important thing to consider is that matches have very limited time, so time must be used wisely.
 
-So when we were in the audience, we would instruct the driver on what the best use of time was at the current moment. 
+So when we were in the audience, we would instruct the driver on what the best use of time was at the current moment.
+
+
+## {{TODO}} (After February Competition) or (Provincials)
