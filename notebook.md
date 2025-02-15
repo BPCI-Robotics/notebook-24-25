@@ -637,4 +637,66 @@ Programming was a field where we encountered many problems, some of them organis
 
 ## Mistakes with organisation and strategy
 
+{{TODO}}
+
 # Provincials
+
+## The plan
+
+We know from the previous qualifier that our robot works. It puts donuts on the stake. And it does so pretty consistently. We want to change nothing fundamental to the robot's operation. The main problem is that the robot is very simple. It plays well, but it does not excel.
+
+Our design decisions are based on the idea that "if this system fails, the robot will still work." If all the new systems fail, the robot is reduced to what we had before, which we know works. With this in mind, we can make any change or addition without worrying about the integrity of the robot.
+
+One change was, of course, fixing the drivetrain.
+
+## Revisiting PID
+
+Our PID wasn't good, but maybe this is because we did not try hard enough. Other teams state that it took them a long time to perfect their control systems. PID will be important to gaining autonomous skills points
+
+## Programming
+
+### Donut elevator routine
+
+Today (February 12), Turhan worked on the donut elevator routine. The problem is that in autonomous, in order to pick up more donuts, we need to be able to differentiate between red and blue donuts. Most teams do this with a color sensor, but all we have is a vision sensor. So we will make do with what we have.
+
+We already know how to reject {{TODO}}
+
+
+### Auton selection
+
+Today (February 14), I both worked on the code rewrite in PROS and in VEX Python. VEX Python is very familiar to us, but PROS + EZ template is simply uncharted territory.
+
+I added auton selectors to both of them. EZ template comes with its own auton selector, but VEX python requires that one be implemented manually. It works somewhat like this:
+
+```python
+class SelectionMenu:
+    # ...
+
+    def __init__(self):
+        self.count = 0
+        self.options: list[Option] = []
+
+        brain.screen.pressed(self.on_brain_screen_press)
+    
+    def on_brain_screen_press(self):
+        x = brain.screen.x_position()
+        y = brain.screen.y_position()
+
+        if y < 240 - 30:
+            return
+        
+        self.options[floor(x / self.count)].next()
+
+        self.draw()
+    
+    # ...
+```
+
+This makes it easy to add more options. Since each option is selected from a circular list, the options could have anything in them. Like selecting from a list of skills auton routines, selecting a binary team color, or even a number from 1 to 10. 
+
+Of course, there is complexity involved in reinventing the wheel in Python, but I saw it as two options:
+
+1. Rewrite the whole program in PROS
+2. Write the auton routine in Python
+
+So of course we did both. That seems silly, but really it's insurance. The code in Python is guaranteed to work, because we know it works. The PROS code is mysterious, as we have little experience in it.
