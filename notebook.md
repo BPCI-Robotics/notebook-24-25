@@ -122,6 +122,7 @@ Given the gravitational potential energy and the power of the motors, we can cal
 
 We can also calculate how many rotations the robot has to make using these formulas:
 
+$$
 \begin{align*}
   & C = \pi d \\
   & \theta = \frac{h}{C} \\
@@ -129,9 +130,11 @@ We can also calculate how many rotations the robot has to make using these formu
   & E = mgh \\
   & \omega = \frac{\theta}{\Delta t} \cdot 60 \frac{s}{m} \\
 \end{align*}
+$$
 
 Now we have everything we need, let's substitute in each of the formulas.
 
+$$
 \begin{align*}
   \omega & = \frac{60 \cdot \theta}{\Delta t} \quad \text{Substitute  } \theta = \frac{h}{C} \\
   \omega & = \frac{60 \cdot \frac{h}{C}}{\Delta t} \\
@@ -142,6 +145,7 @@ Now we have everything we need, let's substitute in each of the formulas.
   \omega & = \frac{60 \cdot P}{C \cdot m g} \quad \text{Substitute  } C = \pi d \\
   \omega & = \frac{60 \cdot P}{\pi d \cdot m g}\\
 \end{align*}
+$$
 
 And there it is, the magic formula. If you give $P$ as 11 watts, $d$ as the diameter of the winch spool in metres, $m$ as the mass of the robot in kilograms, and $g$ as gravity, you get the amount of RPM your winch should have at maximum.
 
@@ -603,8 +607,34 @@ So when we were in the audience, we would instruct the driver on what the best u
 
 # After February Competion
 
-On February 2nd, we went to a city qualifier, where our alliance placed second, only getting defeated in the final match. We also placed second in skills. This was far more successful than we had ever been before. Our hard work paid off, and we realized that we learned something. What factors led to this success, where could we have improved, and what can we learn overall from this?
+On February 2nd, we went to a city qualifier, where our alliance placed second, only getting defeated in the final match. We also placed seventh in skills, based off of a strong driver skills run. This was far more successful than we had ever been before. However, we were still mindful of the fact that we could have done more. What factors led to this success, where could we have improved, and what can we learn overall from this?
+
+## Why were we successful?
+The biggest reason that we could pinpoint for our success was that we were facing off against a different kind of opponent in this competition. In previous competitions, we were facing off against experienced private teams in competitions as an inexperienced, new school team, and as expected, we did poorly. However, we learned much from those competitions, and we improved our robot designs step by step. So, when we were pitted against opponents that had experience levels and resources similar to us (school teams), we fared better. Additionally, our team spirit was better in this competition, showing that keeping a calm and positive outlook on the competitions was the key to doing well. 
+
 
 ## Mistakes made
+We can break down the mistakes made at this particular competition into three types of mistakes:
+- Mistakes with the overall build of the robot
+- Mistakes with programming
+- Mistakes with organization and strategy
+
+## Mistakes with overall build
+While we had moved away from the previous, "undercooked" design to a design that more closely matched the "meta" of most robots, we still had some familiar issues with the structure of our robot that affected how it moved and interacted with field parts. 
+
+1. The robot was top heavy. Whenever the robot accelerated or made a sudden stop, the momentum of the robot would be at the top of the robot, causing it to lurch forward and nearly fall over. We planned to change this by moving the air tank, the brain, and the radio down into the drivebase of the robot. This would require rebuilding the drivebase to some extent.
+2. The robot's wheels were positioned poorly on the drivebase. The wheels were not really at the ends of the drivebase; they were slightly "tucked" inside the drivebase. This led to poorer balance. We planned to wide out the positioning of the wheels of the drivebase, which would improve weight distribution and make the robot more stable. 
+3. The robot was unable to effectively go under the ladder placed in the center of the field. This was because our wall stake mechanism was mounted in such a way that it would catch the first rung of the ladder, limiting the path of movement of our robot. We planned to fix this by lowering the mounting point for our wall stake mechanism.
+4. The robot lacked many functionalities: the wall stake mechansim did not work properly, the robot had no climbing mechanism to speak of, and the robot could not target alliance stakes with its intake system. The robot was limited to only scoring on Mobile Goals and clearing out corners. While these two functionalities were enoug
+
+## Mistakes with programming
+Programming was a field where we encountered many problems, some of them organisational. Possibly the biggest issue with programming was the allocation of time and organisation. All of the following problems stem from problems with decision-making and a lack of proper time management. 
+
+1. No notebook submission. The lack of a notebook closed us off from all the judged awards at the competition. While judged awards do not have anything to do with qualifying into the next round, they are still good awards to win.
+2. Improper time management and prioritization. We spent a good amount of time on color sorting in programming when it was probably more important for us to figure out a good autonomous skills run or in-game autonomous run. It would have been difficult and time-consuming to make color sensing work anyways, but it would have been possible to design an autonomous run that did not require color sensing (through hard-coding). We also spent too much time on PROS before realizing that it would be better for us to work with VexCode Python - this reflects a bad decision-making process on our part.
+3. Improper control system implementation. We implemented our PID and "rolling average" control systems into the robot in a rushed manner and we needed more time to properly implement a control system like a PID. We also tried to do it from scratch when there are frameworks (such as LemLib) for working with control systems.
+4. Improper usage of GitHub. We shared our code through Discord instead of properly using GitHub to store our code. This made implementing the latest version of the code a pain for us, and we needed to constantly dig through Discord messages to find the latest version.
+
+## Mistakes with organisation and strategy
 
 # Provincials
