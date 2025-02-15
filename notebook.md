@@ -122,7 +122,6 @@ Given the gravitational potential energy and the power of the motors, we can cal
 
 We can also calculate how many rotations the robot has to make using these formulas:
 
-$$
 \begin{align*}
   & C = \pi d \\
   & \theta = \frac{h}{C} \\
@@ -130,11 +129,9 @@ $$
   & E = mgh \\
   & \omega = \frac{\theta}{\Delta t} \cdot 60 \frac{s}{m} \\
 \end{align*}
-$$
 
 Now we have everything we need, let's substitute in each of the formulas.
 
-$$
 \begin{align*}
   \omega & = \frac{60 \cdot \theta}{\Delta t} \quad \text{Substitute  } \theta = \frac{h}{C} \\
   \omega & = \frac{60 \cdot \frac{h}{C}}{\Delta t} \\
@@ -145,7 +142,6 @@ $$
   \omega & = \frac{60 \cdot P}{C \cdot m g} \quad \text{Substitute  } C = \pi d \\
   \omega & = \frac{60 \cdot P}{\pi d \cdot m g}\\
 \end{align*}
-$$
 
 And there it is, the magic formula. If you give $P$ as 11 watts, $d$ as the diameter of the winch spool in metres, $m$ as the mass of the robot in kilograms, and $g$ as gravity, you get the amount of RPM your winch should have at maximum.
 
