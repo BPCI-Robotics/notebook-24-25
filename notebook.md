@@ -631,9 +631,6 @@ Programming was a field where we encountered many problems, some of them organis
 3. Improper control system implementation. We implemented our PID and "rolling average" control systems into the robot in a rushed manner and we needed more time to properly implement a control system like a PID. We also tried to do it from scratch when there are frameworks (such as LemLib) for working with control systems.
 4. Improper usage of GitHub. We shared our code through Discord instead of properly using GitHub to store our code. This made implementing the latest version of the code a pain for us, and we needed to constantly dig through Discord messages to find the latest version.
 
-## Mistakes with organisation and strategy
-
-{{TODO}}
 
 # Provincials
 
@@ -645,17 +642,26 @@ Our design decisions are based on the idea that "if this system fails, the robot
 
 One change was, of course, fixing the drivetrain.
 
-## Revisiting PID
-
-Our PID wasn't good, but maybe this is because we did not try hard enough. Other teams state that it took them a long time to perfect their control systems. PID will be important to gaining autonomous skills points
-
 ## Programming
+
+### Revisiting PID
+
+Our PID wasn't good, but maybe this is because we did not try hard enough. Other teams state that it took them a long time to perfect their control systems. PID will be important to gaining autonomous skills points. Without PID, the position of the robot is unpredictable. The robot jerks around, flailing all over the place, and so on. The wheels slip and come off the ground, messing up the position. We went with EZ template, since we saw another team doing it.
+
+The issue with EZ template is that it requires an inertial sensor (IMU). We don't have one of these, but this is a problem for later. We also don't have any space on our drivetrain for tracking wheels, as these did not seem important to us at the time. No time to change this!
 
 ### Donut elevator routine
 
 Today (February 12), Turhan worked on the donut elevator routine. The problem is that in autonomous, in order to pick up more donuts, we need to be able to differentiate between red and blue donuts. Most teams do this with a color sensor, but all we have is a vision sensor. So we will make do with what we have.
 
-We already know how to reject {{TODO}}
+We already know how to reject donuts, we just figuring out how to implement it in code. The essential sequence is that:
+
+1. The donut is picked up (we don't know this).
+2. It passes the vision sensor and it is the enemy team's colour (we know this because of the vision sensor).
+3. It nearly reaches the top of the donut elevator (we know this because of the switch).
+4. It is at the top (we don't know this).
+
+The donut, when it reaches the top, has a certain momentum that allows it to fly off the robot if the hook stops short of picking it up. Since we know when the donut is near the top, we can somewhat predict when it is going to reach the top.
 
 
 ### Auton selection
@@ -696,3 +702,99 @@ Of course, there is complexity involved in reinventing the wheel in Python, but 
 2. Write the auton routine in Python
 
 So of course we did both. That seems silly, but really it's insurance. The code in Python is guaranteed to work, because we know it works. The PROS code is mysterious, as we have little experience in it.
+
+### Code reorganization
+
+Today, on February 15th, I was working on the code, and I noticed that the code was missing a lot of routines which EZ template requires to function properly. I realized that the code was written from scratch, so I copied all of the routines back to the EZ template example project. I also moved around the content of the header files such that it would be much easier to understand. One small change was using C-style comments rather than single-line comments, like this:
+
+```cpp
+/* C-style comment */
+thing.do_stuff();
+
+// Single-line comment
+thing.do_stuff();
+```
+
+I felt that the former was more clean and symmetric. I also completely reorganized the donut elevator routine, which looked like this:
+
+```cpp
+while (lift_intake_is_running) {
+    enemy_donut = vision_sensor.get_by_sig(0,1);
+    if (enemy_donut.height >= 30 && enemy_donut.width >= 70) {
+
+        while (!donut_switch.get_new_press()) {
+
+            int save_direction = lift_intake.get_direction()
+
+            delay(20);
+
+            if (donut_switch.get_new_press()) {
+                delay(100);
+                lift_intake.brake();
+                delay(250);
+                lift_intake.move_velocity(speed * save_direction);
+            }
+        }
+    }
+}
+```
+
+and now looks like this:
+
+```cpp
+void elevator_loop() {
+    while (color_sorting_enabled) {
+        delay(20);
+
+        /* Exit: the lift intake isn't running */
+        if (!lift_intake_running) 
+            continue;
+
+        vision_object enemy_donut = vision_sensor.get_by_sig(0, ENEMY_SIG_ID);
+
+        /* Exit: the donut is too far away (so it appears small) */
+        if (enemy_donut.height < 30 || enemy_donut.width < 70)
+            continue;
+
+        /* Hold on, I found something. Let's wait until the switch is hit. */
+        int timer = 0;
+        bool akita_neru = false;
+
+        while (!donut_presence_sensor.get_new_press()) {
+            delay(10);
+            timer += 10;
+
+            /* 1. Two seconds have passed and the donut did not make it to the top. */
+            /* 2. The lift intake is not spinning anymore. No need to continue waiting. */
+            /* 3. The driver has asked to disable color sorting. No need to continue waiting. */
+            akita_neru = (timer > 2000 || !lift_intake_running || !color_sorting_enabled);
+            if (akita_neru)
+                break;
+        }
+
+        /* Exit: the donut did not make it to the top. */
+        if (akita_neru)
+            continue;
+
+        /* The rest of the routine... */
+    }
+}
+```
+
+This, I think, is a good example of how careful control flow can remove the need for nesting in many cases. It is definitely easier to read. Instead of thinking about all of the state at once, you can read it like a series of instructions, and as you go down, you are more confident that the donut is doing the right thing.
+
+### path.jerryio.com
+
+JerryIO was a key motivation for rewriting all of the code in PROS, since it would allow us to take advantage of path-following algorithms already implemented by others. JerryIO only supports LemLib natively, but the data it provides can be used in any template which implements moving to points along a path, since it is template-agnostic coordinate data.
+
+One could find this data using trial-and-error like we were doing before, but this is more time-consuming.
+
+## Ideas
+
+`February 17th`
+
+Here is a list of unsorted ideas before the competition:
+
+* We can use a color sensor instead of a vision sensor. It is more specialized, and it may be more reliable.
+* We can try to decide the color and direction of the robot at runtime. This has already been implemented, but it is untested.
+* In the future, it would make sense to add tracking wheels to the robot.
