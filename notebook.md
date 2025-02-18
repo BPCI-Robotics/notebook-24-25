@@ -798,3 +798,17 @@ Here is a list of unsorted ideas before the competition:
 * We can use a color sensor instead of a vision sensor. It is more specialized, and it may be more reliable.
 * We can try to decide the color and direction of the robot at runtime. This has already been implemented, but it is untested.
 * In the future, it would make sense to add tracking wheels to the robot.
+
+## Post-submission log
+
+Here is the log of our activities after we submitted the notebook for provincials.
+
+### Tue, February 18
+
+Today we learned that we qualified for provincials. We worked on the wall stake mechanism today and the code.
+
+**Code issues**
+
+It doesn't work. At this point, I have the idea of basing it off the example project, rather than writing it from scratch. I used a lot of features of C++ which I am unfamiliar with. I know I can write code in C that works, so I'm thinking of keeping the code as pure as the C++ api will allow.
+
+For now, we are 
